@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CT Extension</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .popup-container {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: #f9f9f9;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        p {
+            font-size: 14px;
+            margin: 5px 0;
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        span {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="popup-container">
+        <h1>Trạng thái chứng chỉ</h1>
+        <p>Trang hiện tại: <span id="current-site">Loading...</span></p>
+        <div id="loading-spinner" class="spinner"></div>
+        <p>Trạng thái chứng chỉ: <span id="certificate-status">Loading...</span></p>
+        <button onclick="redirectToIndex()">Xem chi tiết</button>
+
+        <hr>
+        <h2>Lịch sử kiểm tra</h2>
+        <div id="history-container"></div>
+        <button onclick="clearHistory()">Xóa lịch sử</button>
+    </div>
+
+
+
+    <script src="popup.js"></script>
+</body>
+
+</html>

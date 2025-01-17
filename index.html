@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate Transparency Extension</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="icons/icon48.png">
+</head>
+
+<body>
+    <div class="popup-container">
+        <header class="popup-header">
+            <img src="icons/icon48.png" alt="Certificate Logo" class="logo">
+            <h2>Certificate Transparency</h2>
+            <p>Kiểm tra độ minh bạch của website dễ dàng.</p>
+        </header>
+
+        <main>
+            <!-- Nút kiểm tra -->
+            <button id="check-button" class="primary-button">Check Now</button>
+
+            <!-- Kết quả kiểm tra -->
+            <div id="result-container" class="hidden">
+                <h3>Kết quả kiểm tra:</h3>
+                <p id="result"></p>
+            </div>
+
+            <!-- Lịch sử kiểm tra -->
+            <section id="history">
+                <h3>Lịch sử kiểm tra</h3>
+                <button id="load-history-button" class="secondary-button">Tải lịch sử từ Blockchain</button>
+                <div id="history-list"></div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Liên kết đến file JavaScript -->
+    <script type="module" src="index.js"></script>
+</body>
+
+</html>

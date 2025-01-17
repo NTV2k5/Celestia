@@ -1,0 +1,32 @@
+[package]
+name = "certificate-transparency-extension"
+version = "0.1.0"
+authors = ["Tên của bạn"]
+edition = "2021"
+description = "Certificate Transparency Extension for web browsers using WebAssembly and Rust"
+license = "MIT"
+repository = "https://github.com/your-repo/certificate-transparency-extension" # Thay bằng repo của bạn
+homepage = "https://your-homepage.com" # Thay bằng trang chính thức
+
+[dependencies]
+web-sys = { version = "0.3.76", features = ["console", "window", "fetch"] }
+wasm-bindgen = { version = "0.2", features = ["serde-serialize"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+reqwest = { version = "0.12.12", features = ["wasm","json"] }
+console_error_panic_hook = "0.1.7"
+wasm-bindgen-futures = "0.4.37"
+actix-web = "4"
+tokio = { version = "1", features = ["full"] }
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[profile.release]
+opt-level = "z"
+lto = true
+panic = "abort"
+strip = true
+
+[features]
+default = ["console_error_panic_hook"]
