@@ -8,38 +8,228 @@
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="icon" href="icons/icon48.png">
+    <style>
+        #home-section {
+            position: relative;
+            background: linear-gradient(135deg, #4CAF50, #007BFF);
+            padding: 50px 20px;
+            color: white;
+            text-align: center;
+            border-radius: 10px;
+            margin: 20px;
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Lớp phủ (overlay) cho ảnh */
+        #home-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+            border-radius: 10px;
+        }
+
+        #home-section * {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Text bên trong */
+        #home-section h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        #home-section p {
+            font-size: 1.2rem;
+            color: #fff;
+        }
+
+        /* Nút hành động */
+        #home-section .primary-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            color: white;
+            background: #4caf50;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        #home-section .primary-button:hover {
+            background: #12c465ae;
+        }
+    </style>
 </head>
 
 <body>
-    <div class="popup-container">
-        <header class="popup-header">
-            <img src="icons/icon48.png" alt="Certificate Logo" class="logo">
-            <h2>Certificate Transparency</h2>
-            <p>Kiểm tra độ minh bạch của website dễ dàng.</p>
-        </header>
+    <div class="container">
+        <!-- Sidebar Menu -->
+        <aside class="sidebar">
+            <nav>
+                <ul class="menu">
+                    <li><a href="#trang-chu" id="trang-chu" data-action="home">Trang chủ</a></li>
+                    <li><a href="#kiem-tra-chung-chi" id="kiem-tra-chung-chi" data-action="check">Kiểm tra chứng chỉ</a>
+                    </li>
+                    <li><a href="#lich-su-kiem-tra" id="lich-su-kiem-tra" data-action="history">Lịch sử kiểm tra</a>
+                    </li>
+                    <li><a href="#cai-dat" id="cai-dat" data-action="settings">Cài đặt</a></li>
+                    <li><a href="#ve-chung-toi" id="ve-chung-toi" data-action="about">Về chúng tôi</a></li>
+                </ul>
+            </nav>
+        </aside>
 
-        <main>
-            <!-- Nút kiểm tra -->
-            <button id="check-button" class="primary-button">Check Now</button>
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Home Section -->
+            <section id="home-section" class="hidden">
+                <h1>Chào mừng bạn đến với Certificate Transparency!</h1>
+                <p>Kiểm tra độ minh bạch của website và bảo vệ thông tin của bạn ngay bây giờ.</p>
+                <a href="#kiem-tra-chung-chi" id="start-check-button" class="primary-button">Bắt đầu kiểm tra</a>
+            </section>
 
-            <!-- Kết quả kiểm tra -->
-            <div id="result-container" class="hidden">
-                <h3>Kết quả kiểm tra:</h3>
-                <p id="result"></p>
+            <!-- Particles Effects -->
+            <div class="particles">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
 
-            <!-- Lịch sử kiểm tra -->
-            <section id="history">
-                <h3>Lịch sử kiểm tra</h3>
-                <button id="load-history-button" class="secondary-button">Tải lịch sử từ Blockchain</button>
-                <div id="history-list"></div>
+            <!-- Wave -->
+            <div class="wave"></div>
+
+            <!-- Popup -->
+            <div class="popup-container hidden">
+                <header class="popup-header">
+                    <img src="icons/icon48.png" alt="Certificate Logo" class="logo">
+                    <h2>Certificate Transparency</h2>
+                    <p>Kiểm tra độ minh bạch của website dễ dàng.</p>
+                </header>
+
+                <main>
+                    <!-- Check Button -->
+                    <button id="check-button" class="primary-button">Check Now</button>
+
+                    <!-- Result Display -->
+                    <div id="result-container" class="hidden">
+                        <h3>Kết quả kiểm tra:</h3>
+                        <p id="result"></p>
+                    </div>
+
+                    <!-- History Section -->
+                    <section id="history-container" class="hidden">
+                        <h3>Lịch sử kiểm tra</h3>
+                        <button id="load-history-button" class="secondary-button">Tải lịch sử từ Blockchain</button>
+                        <div id="history-list"></div>
+                    </section>
+                </main>
+            </div>
+
+            <!-- Settings Section -->
+            <section id="settings-section" class="hidden">
+                <h1>Cài đặt</h1>
+                <ul class="settings-list">
+                    <li>
+                        <h3>Tùy chỉnh giao diện</h3>
+                        <p>Điều chỉnh màu sắc và giao diện của ứng dụng.</p>
+                        <button id="customize-interface" class="settings-button">Tùy chỉnh</button>
+                    </li>
+                    <li>
+                        <h3>Quản lý quyền truy cập</h3>
+                        <p>Kiểm soát và quản lý quyền truy cập của người dùng.</p>
+                        <button id="manage-access" class="settings-button">Quản lý</button>
+                    </li>
+                    <li>
+                        <h3>Thông báo</h3>
+                        <p>Bật hoặc tắt thông báo ứng dụng.</p>
+                        <button id="notifications" class="settings-button">Thiết lập</button>
+                    </li>
+                    <li>
+                        <h3>Cài đặt chức năng</h3>
+                        <p>Kích hoạt hoặc tùy chỉnh các chức năng của ứng dụng.</p>
+                        <button id="function-settings" class="settings-button">Cài đặt</button>
+                    </li>
+                    <li>
+                        <h3>Ngôn ngữ</h3>
+                        <p>Thay đổi ngôn ngữ giao diện ứng dụng.</p>
+                        <button id="language" class="settings-button">Chọn ngôn ngữ</button>
+                    </li>
+                    <li>
+                        <h3>Dữ liệu cá nhân</h3>
+                        <p>Quản lý và kiểm soát dữ liệu cá nhân của bạn.</p>
+                        <button id="personal-data" class="settings-button">Quản lý</button>
+                    </li>
+                    <li>
+                        <h3>Sao lưu và khôi phục</h3>
+                        <p>Tạo bản sao lưu hoặc khôi phục dữ liệu của bạn.</p>
+                        <button id="backup-restore" class="settings-button">Sao lưu/Khôi phục</button>
+                    </li>
+                    <li>
+                        <h3>Cập nhật</h3>
+                        <p>Kiểm tra và cài đặt phiên bản mới nhất của ứng dụng.</p>
+                        <button id="update" class="settings-button">Cập nhật</button>
+                    </li>
+                </ul>
+
             </section>
+
+
+            <div id="about-container" class="hidden">
+                <h2>Về chúng tôi</h2>
+                <div class="about-section">
+                    <h3>Tên Extension:</h3>
+                    <p>Certificate Transparency Checker</p>
+                </div>
+                <div class="about-section">
+                    <h3>Phiên bản:</h3>
+                    <p>1.0.0</p>
+                </div>
+                <div class="about-section">
+                    <h3>Nhà phát triển:</h3>
+                    <p>Nhóm phát triển GDU 07</p>
+                </div>
+                <div class="about-section">
+                    <h3>Mô tả:</h3>
+                    <p>
+                        Công cụ giúp kiểm tra chứng chỉ minh bạch của các trang web,
+                        bảo vệ người dùng khỏi các nguy cơ bảo mật.
+                    </p>
+                </div>
+                <div class="about-section">
+                    <h3>Quyền truy cập:</h3>
+                    <ul>
+                        <li>Kết nối mạng</li>
+                        <li>Lưu trữ cục bộ (local storage)</li>
+                    </ul>
+                </div>
+                <div class="about-section">
+                    <h3>Chính sách quyền riêng tư:</h3>
+                    <p>
+                        Chúng tôi cam kết không thu thập hoặc chia sẻ dữ liệu cá nhân của bạn.
+                        Vui lòng đọc thêm tại <a href="#" target="_blank">chính sách quyền riêng tư</a>.
+                    </p>
+                </div>
+                <div class="about-section">
+                    <h3>Cập nhật lần cuối:</h3>
+                    <p>16/01/2025</p>
+                </div>
+            </div>
 
         </main>
     </div>
 
     <!-- Liên kết đến file JavaScript -->
     <script type="module" src="index.js"></script>
+
 </body>
 
 </html>

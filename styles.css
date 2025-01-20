@@ -1,21 +1,316 @@
 /* Cấu hình cơ bản */
+/* Đảm bảo background chính được áp dụng đúng */
+html,
 body {
     font-family: 'Roboto', sans-serif;
-    background: #f7f7f7;
     margin: 0;
+    padding: 0;
+    color: #fff;
+    background: linear-gradient(135deg, #4CAF50, #007BFF);
+    background-size: 400% 400%;
+    animation: gradientMove 10s ease infinite;
+    min-height: 100vh;
+    /* Đảm bảo background bao phủ toàn bộ chiều cao */
+    overflow: hidden;
+    /* Ẩn scroll nếu không cần */
+    position: relative;
+    /* Đặt nền ở dưới cùng */
+}
+
+
+/* Animation Gradient Nền */
+@keyframes gradientMove {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+#settings-section {
+    padding: 20px;
+    width: 70%;
+    margin: 20px auto auto;
+    background: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+}
+
+#settings-section h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #4CAF50;
+    text-align: center;
+}
+
+.settings-list {
+    list-style: none;
     padding: 0;
 }
 
-/* Hộp chứa nội dung */
+.settings-list li {
+    margin-bottom: 15px;
+    padding: 15px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.settings-list h3 {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+    color: #000;
+}
+
+.settings-list p {
+    margin-bottom: 10px;
+    font-size: 1rem;
+    color: #666;
+}
+
+.settings-button {
+    padding: 8px 16px;
+    font-size: 1rem;
+    background: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.settings-button:hover {
+    background: #0056b3;
+}
+
+#about-container {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 20px auto auto;
+    max-width: 600px;
+    font-family: Arial, sans-serif;
+    color: #333;
+}
+
+#about-container h2 {
+    font-size: 24px;
+    color: transparent;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.about-section {
+    margin-bottom: 15px;
+}
+
+.about-section h3 {
+    font-size: 18px;
+    color: #000;
+    margin-bottom: 8px;
+}
+
+.about-section p,
+.about-section ul {
+    font-size: 16px;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.about-section ul {
+    padding-left: 20px;
+}
+
+.about-section ul li {
+    list-style-type: disc;
+    margin-bottom: 5px;
+}
+
+.about-section a {
+    color: #0073e6;
+    text-decoration: underline;
+    font-size: 1;
+}
+
+.about-section a:hover {
+    text-decoration: none;
+}
+
+
+/* Sidebar menu */
+.sidebar {
+    width: 250px;
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar .menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar .menu li {
+    margin: 20px 0;
+}
+
+.sidebar .menu li a {
+    text-decoration: none;
+    color: #ecf0f1;
+    font-weight: 500;
+    display: block;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar .menu li a:hover {
+    background-color: #34495e;
+}
+
+/* Main content */
+.main-content {
+    flex: 1;
+    position: relative;
+    background: linear-gradient(135deg, #4CAF50, #007BFF);
+    /* Màu nền chính */
+    overflow-y: auto;
+}
+
+
+/* Particles */
+.particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.particles span {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    animation: moveParticles 10s linear infinite;
+    opacity: 0;
+    animation-delay: calc(-1s * var(--i));
+}
+
+.particles span:nth-child(1) {
+    top: 20%;
+    left: 30%;
+    --i: 1;
+}
+
+.particles span:nth-child(2) {
+    top: 40%;
+    left: 60%;
+    --i: 2;
+}
+
+.particles span:nth-child(3) {
+    top: 70%;
+    left: 20%;
+    --i: 3;
+}
+
+.particles span:nth-child(4) {
+    top: 50%;
+    left: 80%;
+    --i: 4;
+}
+
+.particles span:nth-child(5) {
+    top: 90%;
+    left: 40%;
+    --i: 5;
+}
+
+@keyframes moveParticles {
+    0% {
+        transform: translateY(0px);
+        opacity: 0.8;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(-100px);
+        opacity: 0;
+    }
+}
+
+/* Sóng */
+.wave {
+    position: absolute;
+    bottom: -1000px;
+    width: 100%;
+    height: 150px;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ffffff" fill-opacity="1" d="M0,160L30,170.7C60,181,120,203,180,192C240,181,300,139,360,122.7C420,107,480,117,540,149.3C600,181,660,235,720,234.7C780,235,840,181,900,160C960,139,1020,149,1080,160C1140,171,1200,181,1260,170.7C1320,160,1380,128,1410,112L1440,96L1440,320L1410,320C1380,320,1320,320,1260,320C1200,320,1140,320,1080,320C1020,320,960,320,900,320C840,320,780,320,720,320C660,320,600,320,540,320C480,320,420,320,360,320C300,320,240,320,180,320C120,320,60,320,30,320L0,320Z"></path></svg>');
+    background-size: cover;
+    animation: waveMove 5s linear infinite;
+}
+
+@keyframes waveMove {
+    0% {
+        background-position-x: 0;
+    }
+
+    100% {
+        background-position-x: 1000px;
+    }
+}
+
+/* Popup Container */
 .popup-container {
+    position: relative;
+    display: n;
+    z-index: 10;
     max-width: 400px;
     margin: 20px auto;
     padding: 20px;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    width: max-content;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 5%;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
     text-align: center;
+    animation: bounceIn 1s ease-out;
+}
+
+/* Hiệu ứng bounce */
+@keyframes bounceIn {
+    0% {
+        transform: scale(0.9);
+        opacity: 0.7;
+    }
+
+    60% {
+        transform: scale(1.05);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1);
+    }
 }
 
 /* Phần tiêu đề */
@@ -26,38 +321,60 @@ body {
 .logo {
     width: 48px;
     height: 48px;
+    border-radius: 55%;
     margin-bottom: 10px;
+    animation: rotateLogo 3s linear infinite;
+}
+
+/* Logo xoay chậm */
+@keyframes rotateLogo {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 h2 {
-    font-size: 20px;
+    font-size: 24px;
     color: #333;
     margin: 10px 0;
+    background: linear-gradient(to right, #4CAF50, #007BFF);
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+h3 {
+    color: #000;
 }
 
 /* Nút bấm */
 button.primary-button {
     display: block;
     width: 100%;
-    padding: 10px;
-    background: #4CAF50;
+    padding: 12px;
+    background: linear-gradient(to right, #4CAF50, #45a049);
     color: white;
     border: none;
     border-radius: 5px;
     font-size: 16px;
     cursor: pointer;
     margin-top: 15px;
+    transition: all 0.3s ease-in-out;
 }
 
 button.primary-button:hover {
-    background: #45a049;
+    background: linear-gradient(to right, #45a049, #4CAF50);
+    transform: scale(1.05);
 }
 
 button.secondary-button {
     display: block;
     width: 100%;
-    padding: 8px;
-    background: #007BFF;
+    padding: 10px;
+    background: linear-gradient(to right, #007BFF, #0056b3);
     color: white;
     border: none;
     border-radius: 5px;
@@ -65,41 +382,94 @@ button.secondary-button {
     cursor: pointer;
     margin-top: 10px;
     margin-bottom: 10px;
+    transition: all 0.3s ease-in-out;
 }
 
 button.secondary-button:hover {
-    background: #0056b3;
+    background: linear-gradient(to right, #0056b3, #007BFF);
+    transform: scale(1.05);
+}
+
+p {
+    color: #000;
 }
 
 /* Hiển thị kết quả */
 #result-container {
     margin-top: 20px;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+    padding: 15px;
+    display: block;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
     background: #fafafa;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 1s ease-in-out;
 }
 
 #result.valid {
     color: green;
     font-weight: bold;
+    animation: pulse 1.5s infinite;
 }
 
 #result.invalid {
     color: red;
     font-weight: bold;
+    animation: shake 0.5s;
 }
 
+/* Hiệu ứng pulse */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Hiệu ứng shake */
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-5px);
+    }
+
+    50% {
+        transform: translateX(5px);
+    }
+
+    75% {
+        transform: translateX(-5px);
+    }
+}
 
 /* Lịch sử kiểm tra */
 #history-container {
     margin-top: 20px;
-    padding: 10px;
-    background: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+    margin-bottom: 10px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     max-height: 200px;
     overflow-y: auto;
+    animation: fadeIn 1s ease-in-out;
+}
+
+#history-list {
+    color: #000;
 }
 
 .history-entry {
@@ -111,44 +481,23 @@ button.secondary-button:hover {
     text-align: left;
 }
 
-.history-entry p {
-    margin: 5px 0;
-}
-
-/* Nút xóa lịch sử */
-.secondary-button {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    margin-top: 10px;
-    background: #f44336;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-.secondary-button:hover {
-    background: #d32f2f;
-}
-
-
-/* Link liên kết */
+/* Hiệu ứng link */
 a {
     color: #4CAF50;
     text-decoration: none;
     font-size: 14px;
+    transition: color 0.3s ease-in-out;
 }
 
 a:hover {
+    color: #45a049;
     text-decoration: underline;
 }
 
 /* Hiệu ứng tải */
 .spinner {
     margin: 20px auto;
-    border: 4px solid #f3f3f3;
+    border: 4px solid rgba(255, 255, 255, 0.3);
     border-top: 4px solid #4CAF50;
     border-radius: 50%;
     width: 30px;
@@ -187,50 +536,12 @@ a:hover {
         height: 40px;
     }
 
-    /* Spinner */
-    .spinner {
-        margin: 10px auto;
-        border: 4px solid #f3f3f3;
-        border-top: 4px solid #4CAF50;
-        border-radius: 50%;
-        width: 30px;
-        height: 30px;
-        animation: spin 1s linear infinite;
+    /* .hidden {
         display: none;
     }
 
-    @keyframes spin {
-        0% {
-            transform: rotate(0deg);
-        }
-
-        100% {
-            transform: rotate(360deg);
-        }
-    }
-
-    /* Thêm màu sắc và biểu tượng cho trạng thái */
-    #certificate-status {
-        font-size: 16px;
-        font-weight: bold;
-    }
-
-    #certificate-status.valid {
-        color: green;
-    }
-
-    #certificate-status.valid::before {
-        content: '✔️ ';
-        /* Biểu tượng hợp lệ */
-    }
-
-    #certificate-status.invalid {
-        color: red;
-    }
-
-    #certificate-status.invalid::before {
-        content: '❌ ';
-        /* Biểu tượng không hợp lệ */
-    }
+    .section {
+        padding: 20px;
+    } */
 
 }
