@@ -1,3 +1,10 @@
+:root {
+    --background-color: linear-gradient(135deg, #4CAF50, #007BFF);
+    --background-color-light: rgba(255, 255, 255, 0.8);
+    --background-color-dark: rgba(0, 0, 0, 0.3);
+}
+
+
 /* Cấu hình cơ bản */
 /* Đảm bảo background chính được áp dụng đúng */
 html,
@@ -6,7 +13,7 @@ body {
     margin: 0;
     padding: 0;
     color: #fff;
-    background: linear-gradient(135deg, #4CAF50, #007BFF);
+    background: var(--background-color);
     background-size: 400% 400%;
     animation: gradientMove 10s ease infinite;
     min-height: 100vh;
@@ -38,14 +45,18 @@ body {
     height: 100vh;
 }
 
+/* Settings */
 #settings-section {
+    position: relative;
     padding: 20px;
     width: 70%;
-    margin: 20px auto auto;
-    background: #f9f9f9;
+    margin: 45px auto auto;
+    background: var(--background-color-light);
     border-radius: 10px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    z-index: 1;
+    z-index: 6;
+    animation: bounceIn 1s ease-out;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
 #settings-section h1 {
@@ -68,11 +79,6 @@ body {
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.settings-list h3 {
-    font-size: 1.2rem;
-    margin-bottom: 5px;
-    color: #000;
-}
 
 .settings-list p {
     margin-bottom: 10px;
@@ -88,22 +94,55 @@ body {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+
 }
 
 .settings-button:hover {
     background: #0056b3;
 }
 
+/* Định nghĩa cho giao diện sáng */
+body.light-theme .content-area {
+    background: var(--background-color-light);
+    color: #000000;
+}
+
+/* Định nghĩa cho giao diện tối */
+body.dark-theme .content-area {
+    background: var(--background-color-dark);
+    color: #ffffff;
+}
+
+#theme-select {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+/* Ẩn menu tùy chỉnh */
+.hidden {
+    display: none;
+}
+
+/* About */
 #about-container {
+    position: relative;
     padding: 20px;
-    background-color: #f9f9f9;
+    background: var(--background-color-light);
     border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin: 20px auto auto;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    margin: 45px auto auto;
     max-width: 600px;
     font-family: Arial, sans-serif;
     color: #333;
+    z-index: 5;
+    animation: bounceIn 1s ease-out;
 }
+
 
 #about-container h2 {
     font-size: 24px;
@@ -156,6 +195,7 @@ body {
     color: #ecf0f1;
     padding: 20px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    z-index: 3;
 }
 
 .sidebar .menu {
@@ -182,24 +222,55 @@ body {
     background-color: #34495e;
 }
 
+
+
 /* Main content */
 .main-content {
     flex: 1;
     position: relative;
-    background: linear-gradient(135deg, #4CAF50, #007BFF);
+    background: var(--background-color);
     /* Màu nền chính */
     overflow-y: auto;
+    padding-bottom: 50px;
 }
 
+/* Introduction */
+#introduction-container {
+    margin: 21px 5px 0;
+    padding: 20px;
+    text-align: center;
+}
+
+.introduction-section h1 {
+    font-size: 2rem;
+    color: #fff;
+    margin-bottom: 35px;
+}
+
+.introduction-section h2 {
+    font-size: 1.5rem;
+    color: #fff;
+    margin: 40px 0 20px;
+    text-align: left;
+}
+
+.introduction-section p {
+    font-size: 1.2rem;
+    color: #fff;
+    margin-bottom: 20px;
+    text-align: left;
+}
 
 /* Particles */
 .particles {
     position: absolute;
     top: 0;
     left: 0;
+    right: 0;
+    bottom: 0;
     width: 100%;
     height: 100%;
-    z-index: -1;
+    z-index: 4;
     overflow: hidden;
 }
 
@@ -244,6 +315,36 @@ body {
     --i: 5;
 }
 
+.particles span:nth-child(6) {
+    top: 30%;
+    left: 10%;
+    --i: 6;
+}
+
+.particles span:nth-child(7) {
+    top: 10%;
+    left: 70%;
+    --i: 7;
+}
+
+.particles span:nth-child(8) {
+    top: 100%;
+    left: 50%;
+    --i: 8;
+}
+
+.particles span:nth-child(9) {
+    top: 80%;
+    left: 90%;
+    --i: 9;
+}
+
+.particles span:nth-child(10) {
+    top: 60%;
+    left: 100%;
+    --i: 10;
+}
+
 @keyframes moveParticles {
     0% {
         transform: translateY(0px);
@@ -260,16 +361,20 @@ body {
     }
 }
 
+
 /* Sóng */
 .wave {
     position: absolute;
-    bottom: -1000px;
+    left: 0;
+    bottom: 0;
     width: 100%;
-    height: 150px;
+    height: 25%;
     background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ffffff" fill-opacity="1" d="M0,160L30,170.7C60,181,120,203,180,192C240,181,300,139,360,122.7C420,107,480,117,540,149.3C600,181,660,235,720,234.7C780,235,840,181,900,160C960,139,1020,149,1080,160C1140,171,1200,181,1260,170.7C1320,160,1380,128,1410,112L1440,96L1440,320L1410,320C1380,320,1320,320,1260,320C1200,320,1140,320,1080,320C1020,320,960,320,900,320C840,320,780,320,720,320C660,320,600,320,540,320C480,320,420,320,360,320C300,320,240,320,180,320C120,320,60,320,30,320L0,320Z"></path></svg>');
     background-size: cover;
-    animation: waveMove 5s linear infinite;
+    animation: waveMove 8s linear infinite;
 }
+
+
 
 @keyframes waveMove {
     0% {
@@ -284,13 +389,12 @@ body {
 /* Popup Container */
 .popup-container {
     position: relative;
-    display: n;
     z-index: 10;
     max-width: 400px;
-    margin: 20px auto;
+    margin: 45px auto;
     padding: 20px;
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 5%;
+    background: var(--background-color-light);
+    border-radius: 6%;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
     text-align: center;
     animation: bounceIn 1s ease-out;
@@ -338,10 +442,11 @@ body {
 }
 
 h2 {
-    font-size: 24px;
+    font-size: 28px;
     color: #333;
+    text-align: center;
     margin: 10px 0;
-    background: linear-gradient(to right, #4CAF50, #007BFF);
+    background: var(--background-color);
     -webkit-background-clip: text;
     color: transparent;
 }
@@ -393,6 +498,7 @@ button.secondary-button:hover {
 p {
     color: #000;
 }
+
 
 /* Hiển thị kết quả */
 #result-container {
@@ -454,12 +560,23 @@ p {
     }
 }
 
+/* Input URL */
+#url-input {
+    width: 95%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
 /* Lịch sử kiểm tra */
 #history-container {
     margin-top: 20px;
     margin-bottom: 10px;
     padding: 15px;
-    background: rgba(255, 255, 255, 0.8);
+    background: var(--background-color-light);
     border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -517,12 +634,46 @@ a:hover {
 
 /* Màn hình nhỏ */
 @media screen and (max-width: 480px) {
+
+    html,
+    body {
+        height: 350px;
+    }
+
     .popup-container {
         padding: 15px;
+        margin: 10px;
+        width: 200px;
+        height: auto;
+        border-radius: 15px;
+    }
+
+    h1 {
+        font-size: 18px;
+        color: #333;
     }
 
     h2 {
+        color: #333;
         font-size: 18px;
+    }
+
+    button {
+        color: #fff;
+        background-color: #45a049;
+        border-style: none;
+        border-radius: 5px;
+        padding: 2px;
+        width: 45%;
+        height: auto;
+    }
+
+    button:hover {
+        background-color: #4CAF50;
+        cursor: pointer;
+        height: 25px;
+        width: 100px;
+        transition: all 0.3s ease-in-out;
     }
 
     button.primary-button,

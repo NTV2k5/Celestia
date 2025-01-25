@@ -4,8 +4,10 @@ async function run() {
     await init();
 
     const homePage = document.getElementById("home-section");
+    const introductionPage = document.getElementById("introduction-container");
     const startCheckButton = document.getElementById("start-check-button");
     const checkButton = document.getElementById("check-button");
+    const urlInput = document.getElementById('url-input');
     const resultContainer = document.getElementById("result-container");
     const resultText = document.getElementById("result");
     const historyContainer = document.getElementById("history-container");
@@ -15,11 +17,13 @@ async function run() {
     const menuItems = document.querySelectorAll('.menu li a');
     const settingsPage = document.getElementById('settings-section');
     const customizeInterface = document.getElementById('customize-interface');
-    const manageAccess = document.getElementById('manage-access');
+    const customizeMenu = document.getElementById('customize-menu');
+    const themeSelect = document.getElementById('theme-select');
+    // const manageAccess = document.getElementById('manage-access');
     const notifications = document.getElementById('notifications');
     const functionSettings = document.getElementById('function-settings');
     const language = document.getElementById('language');
-    const personalData = document.getElementById('personal-data');
+    // const personalData = document.getElementById('personal-data');
     const backupRestore = document.getElementById('backup-restore');
     const update = document.getElementById('update');
     const aboutPage = document.getElementById('about-container');
@@ -41,13 +45,16 @@ async function run() {
                 homePage.style.display = 'block';
                 settingsPage.style.display = 'none';
                 aboutPage.style.display = 'none';
+                introductionPage.style.display = 'block';
                 break;
 
             case 'check':
                 // Hiển thị popup và nút kiểm tra
                 homePage.style.display = 'none';
+                introductionPage.style.display = 'none';
                 popupContainer.style.display = 'block';
                 checkButton.style.display = 'block';
+                urlInput.style.display = 'block';
                 resultContainer.style.display = 'block';
                 // Ẩn phần lịch sử
                 historyContainer.style.display = 'none';
@@ -59,8 +66,10 @@ async function run() {
             case 'history':
                 // Hiển thị popup và phần lịch sử
                 homePage.style.display = 'none';
+                introductionPage.style.display = 'none';
                 popupContainer.style.display = 'block';
                 checkButton.style.display = 'none';
+                urlInput.style.display = 'none';
                 resultContainer.style.display = 'none';
                 settingsPage.style.display = 'none';
                 aboutPage.style.display = 'none';
@@ -74,6 +83,7 @@ async function run() {
                 // Ẩn popup ở các trang khác
                 popupContainer.style.display = 'none';
                 homePage.style.display = 'none';
+                introductionPage.style.display = 'none';
                 aboutPage.style.display = 'none';
                 // Hiển thị trang settings
                 settingsPage.style.display = 'block';
@@ -82,6 +92,7 @@ async function run() {
                 // Ẩn popup ở các trang khác
                 popupContainer.style.display = 'none';
                 homePage.style.display = 'none';
+                introductionPage.style.display = 'none';
                 settingsPage.style.display = 'none';
                 // Hiển thị trang about
                 aboutPage.style.display = 'block';
@@ -99,8 +110,6 @@ async function run() {
         });
     }
 
-
-
     // Thêm event listeners cho menu
     menuItems.forEach(item => {
         item.addEventListener('click', function (event) {
@@ -109,51 +118,85 @@ async function run() {
             handleMenuAction(action);
         });
     });
-    checkButton.addEventListener("click", async () => {
-        const domain = prompt("Nhập địa chỉ website để kiểm tra (ví dụ: example.com):").trim();
+    // checkButton.addEventListener("click", async () => {
+    //     const domain = prompt("Nhập địa chỉ website để kiểm tra (ví dụ: example.com):").trim();
 
-        if (!domain) {
-            alert("Bạn cần nhập một địa chỉ hợp lệ!");
+    //     if (!domain) {
+    //         alert("Bạn cần nhập một địa chỉ hợp lệ!");
+    //         return;
+    //     }
+
+    //     if (!isValidDomain(domain)) {
+    //         alert("Địa chỉ không hợp lệ! Vui lòng nhập đúng định dạng, ví dụ: example.com");
+    //         return;
+    //     }
+
+    //     showResult("Đang kiểm tra...", "loading");
+
+    //     try {
+    //         // Kết nối API để kiểm tra chứng chỉ
+    //         const response = await fetch(`https://api.certificatetransparency.dev/v1/check?domain=${domain}`);
+
+    //         if (!response.ok) {
+    //             throw new Error("Không thể kết nối đến API kiểm tra chứng chỉ.");
+    //         }
+
+    //         const data = await response.json();
+    //         const isValid = data.status === "Valid";
+
+    //         const statusText = isValid ? "Chứng chỉ hợp lệ!" : "Chứng chỉ không hợp lệ!";
+    //         const statusClass = isValid ? "valid" : "invalid";
+
+    //         // Hiển thị kết quả
+    //         showResult(statusText, statusClass);
+
+    //         // Lưu kết quả vào lịch sử
+    //         saveToHistory(domain, statusText);
+
+    //         // Hiển thị lịch sử mới
+    //         displayHistory();
+    //     } catch (error) {
+    //         console.error("Lỗi khi kiểm tra chứng chỉ:", error);
+    //         showResult("Lỗi khi kiểm tra chứng chỉ!", "invalid");
+    //     }
+    // });
+
+    // Xử lý sự kiện khi nhấn nút "Check Now"
+    checkButton.addEventListener('click', () => {
+        // Lấy giá trị URL từ ô input
+        const url = urlInput.value.trim();
+
+        // Kiểm tra nếu URL rỗng
+        if (!url) {
+            showResult('Vui lòng nhập URL hợp lệ.', 'error');
             return;
         }
 
-        if (!isValidDomain(domain)) {
-            alert("Địa chỉ không hợp lệ! Vui lòng nhập đúng định dạng, ví dụ: example.com");
-            return;
-        }
+        // Hiển thị thông báo đang kiểm tra
+        showResult(`Đang kiểm tra chứng chỉ cho URL: ${url}`, 'info');
+        resultText.style.color = 'blue';
 
-        showResult("Đang kiểm tra...", "loading");
-
-        try {
-            // Kết nối API để kiểm tra chứng chỉ
-            const response = await fetch(`https://api.certificatetransparency.dev/v1/check?domain=${domain}`);
-
-            if (!response.ok) {
-                throw new Error("Không thể kết nối đến API kiểm tra chứng chỉ.");
-            }
-
-            const data = await response.json();
-            const isValid = data.status === "Valid";
-
-            const statusText = isValid ? "Chứng chỉ hợp lệ!" : "Chứng chỉ không hợp lệ!";
-            const statusClass = isValid ? "valid" : "invalid";
+        // Giả lập kiểm tra chứng chỉ (có thể thay bằng logic thực tế)
+        setTimeout(() => {
+            const isValid = Math.random() > 0.5; // Kết quả ngẫu nhiên
+            const resultMessage = isValid
+                ? `Chứng chỉ của ${url} là hợp lệ!`
+                : `Chứng chỉ của ${url} không hợp lệ hoặc thiếu minh bạch.`;
+            const resultStatus = isValid ? resultText.style.color = 'green' : resultText.style.color = 'red';
 
             // Hiển thị kết quả
-            showResult(statusText, statusClass);
+            showResult(resultMessage, resultStatus);
 
             // Lưu kết quả vào lịch sử
-            saveToHistory(domain, statusText);
+            saveToHistory(url, isValid ? 'Hợp lệ' : 'Không minh bạch hoặc không hợp lệ');
 
-            // Hiển thị lịch sử mới
+            // Cập nhật hiển thị lịch sử
             displayHistory();
-        } catch (error) {
-            console.error("Lỗi khi kiểm tra chứng chỉ:", error);
-            showResult("Lỗi khi kiểm tra chứng chỉ!", "invalid");
-        }
+        }, 3000); // Thời gian giả lập kiểm tra (3 giây)
     });
 
     function isValidDomain(domain) {
-        const domainRegex = /^(?!:\/\/)([a-zA-Z0-9-_]+\.)+[a-zA-Z]{2,}$/;
+        const domainRegex = /^(?!:\/\/)([a-zA-Z0-9-_]{1,63}\.)+[a-zA-Z]{2,}$/;
         return domainRegex.test(domain);
     }
 
@@ -215,6 +258,7 @@ async function run() {
         });
     }
 
+
     function deleteHistoryEntry(index) {
         const history = JSON.parse(localStorage.getItem("certHistory")) || [];
         history.splice(index, 1); // Xóa mục tại vị trí `index`
@@ -239,14 +283,50 @@ async function run() {
 
     // Xử lý sự kiện cho các nút trong Cài đặt
     // Tùy chỉnh giao diện
-    customizeInterface.addEventListener('click', () => {
-        alert('Mở giao diện tùy chỉnh màu sắc và chủ đề!');
+    // customizeInterface.addEventListener('click', () => {
+    //     // alert('Mở giao diện tùy chỉnh màu sắc và chủ đề!');
+
+    // });
+    // Hiển thị menu tùy chỉnh khi nhấn nút "Tùy chỉnh"
+    customizeInterface.addEventListener('click', function () {
+        customizeMenu.classList.toggle('hidden');
     });
 
-    // Quản lý quyền truy cập
-    manageAccess.addEventListener('click', () => {
-        alert('Điều chỉnh quyền truy cập của người dùng!');
+    // Áp dụng giao diện khi người dùng chọn từ menu
+    themeSelect.addEventListener('change', function () {
+        const selectedTheme = themeSelect.value;
+        setTheme(selectedTheme);
+        localStorage.setItem('theme', selectedTheme); // Lưu lựa chọn vào localStorage
     });
+
+    // Hàm thay đổi giao diện
+    function setTheme(theme) {
+        document.body.classList.remove('light-theme', 'dark-theme');
+        if (theme === 'light') {
+            document.body.classList.add('light-theme');
+        } else if (theme === 'dark') {
+            document.body.classList.add('dark-theme');
+        } else if (theme === 'system') {
+            // Theo mặc định của hệ thống
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.body.classList.add('dark-theme');
+            } else {
+                document.body.classList.add('light-theme');
+            }
+        }
+    }
+
+    // Áp dụng giao diện khi tải trang
+    window.addEventListener('DOMContentLoaded', function () {
+        const savedTheme = localStorage.getItem('theme') || 'system'; // Lấy giao diện từ localStorage
+        themeSelect.value = savedTheme; // Hiển thị lựa chọn trong menu
+        setTheme(savedTheme); // Áp dụng giao diện
+    });
+
+    // // Quản lý quyền truy cập
+    // manageAccess.addEventListener('click', () => {
+    //     alert('Điều chỉnh quyền truy cập của người dùng!');
+    // });
 
     // Thông báo
     notifications.addEventListener('click', () => {
@@ -274,14 +354,9 @@ async function run() {
         }
     });
 
-    // Dữ liệu cá nhân
-    personalData.addEventListener('click', () => {
-        alert('Mở trình quản lý dữ liệu cá nhân.');
-    });
-
     // Sao lưu và khôi phục
     backupRestore.addEventListener('click', () => {
-        const action = prompt('Bạn muốn (1) Sao lưu hay (2) Khôi phục dữ liệu?', '1');
+        const action = prompt('Bạn muốn: \n(1) Sao lưu \n(2) Khôi phục dữ liệu', '1');
         if (action === '1') {
             alert('Dữ liệu đã được sao lưu thành công!');
         } else if (action === '2') {
@@ -293,7 +368,7 @@ async function run() {
 
     // Cập nhật
     update.addEventListener('click', () => {
-        alert('Kiểm tra và cài đặt bản cập nhật mới nhất.');
+        alert('Phiên bản hiện tại là bản cập nhật mới nhất.');
     });
 
 

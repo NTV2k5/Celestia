@@ -3,6 +3,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     const certificateStatusElement = document.getElementById('certificate-status');
     const spinnerElement = document.getElementById('loading-spinner');
     const historyContainer = document.getElementById('history-container');
+    const resultContainer = document.getElementById('result-container');
+    const resultText = document.getElementById('result');
+
 
     // Hiển thị spinner trong khi tải
     spinnerElement.style.display = 'block';
@@ -19,29 +22,65 @@ document.addEventListener('DOMContentLoaded', async () => {
             currentSiteElement.innerText = hostname;
 
             try {
-                // API giả lập kiểm tra chứng chỉ
-                const response = await fetch(`https://api.certificatetransparency.dev/v1/check?domain=${hostname}`);
-                const data = await response.json();
+                // // API giả lập kiểm tra chứng chỉ
+                // const response = await fetch(`https://api.certificatetransparency.dev/v1/check?domain=${hostname}`);
+                // const data = await response.json();
 
-                let statusText = '';
-                let statusClass = '';
-                if (response.ok && data) {
-                    statusText = data.status || 'Hợp lệ';
-                    statusClass = data.status === 'Hợp lệ' ? 'valid' : 'invalid';
-                } else {
-                    statusText = 'Không hợp lệ';
-                    statusClass = 'invalid';
+                // let statusText = '';
+                // let statusClass = '';
+                // if (response.ok && data) {
+                //     statusText = data.status || 'Hợp lệ';
+                //     statusClass = data.status === 'Hợp lệ' ? 'valid' : 'invalid';
+                // } else {
+                //     statusText = 'Không hợp lệ';
+                //     statusClass = 'invalid';
+                // }
+
+                // certificateStatusElement.innerText = statusText;
+                // certificateStatusElement.className = statusClass;
+
+                // // Lưu trạng thái vào localStorage
+                // saveToHistory(hostname, statusText);
+
+
+                // Kiểm tra nếu URL rỗng
+                if (!url) {
+                    resultContainer.style.display = 'block';
+                    resultText.textContent = 'Vui lòng nhập URL hợp lệ.';
+                    resultText.style.color = 'red';
+                    return;
                 }
 
-                certificateStatusElement.innerText = statusText;
-                certificateStatusElement.className = statusClass;
+                // Giả lập kiểm tra chứng chỉ (bạn có thể thay bằng logic kiểm tra thực tế)
+                resultContainer.style.display = 'block';
+                resultText.textContent = `Đang kiểm tra chứng chỉ cho URL: ${hostname}`;
+                resultText.style.color = 'blue';
 
-                // Lưu trạng thái vào localStorage
-                saveToHistory(hostname, statusText);
+                setTimeout(() => {
+                    // Mô phỏng kết quả kiểm tra
+                    const isValid = Math.random() > 0.5; // Kết quả ngẫu nhiên (true hoặc false)
+                    if (isValid) {
+                        resultText.textContent = `Chứng chỉ của ${hostname} là hợp lệ!`;
+                        resultText.style.color = 'green';
+                    } else {
+                        resultText.textContent = `Chứng chỉ của ${hostname} không hợp lệ hoặc thiếu minh bạch.`;
+                        resultText.style.color = 'red';
+                    }
+                    resultText.textContent = resultMessage;
+
+                    // Lưu kết quả vào lịch sử
+                    saveToHistory(hostname, resultMessage);
+
+                    // Cập nhật hiển thị lịch sử
+                    renderHistory();
+                    // // Cập nhật hiển thị lịch sử
+                    // displayHistory();
+                }, 3000); // Thời gian giả lập kiểm tra (3 giây)
+
             } catch (error) {
                 certificateStatusElement.innerText = 'Lỗi khi kiểm tra chứng chỉ';
                 certificateStatusElement.className = 'invalid';
-                console.error('Error fetching certificate status:', error);
+                // console.error('Error fetching certificate status:', error);
             } finally {
                 // Ẩn spinner sau khi hoàn tất
                 spinnerElement.style.display = 'none';
@@ -53,45 +92,69 @@ document.addEventListener('DOMContentLoaded', async () => {
         } else {
             currentSiteElement.innerText = 'Không thể lấy thông tin trang web';
         }
+
+
     });
-});
 
-function redirectToIndex() {
-    window.open('index.html', '_blank');
-}
-
-// Lưu trạng thái vào localStorage
-function saveToHistory(site, status) {
-    const history = JSON.parse(localStorage.getItem('certificateHistory')) || [];
-    history.unshift({ site, status, timestamp: new Date().toLocaleString() });
-    localStorage.setItem('certificateHistory', JSON.stringify(history));
-}
-
-// Hiển thị lịch sử từ localStorage
-function renderHistory() {
-    const history = JSON.parse(localStorage.getItem('certificateHistory')) || [];
-    const historyContainer = document.getElementById('history-container');
-    historyContainer.innerHTML = ''; // Xóa lịch sử cũ
-
-    if (history.length === 0) {
-        historyContainer.innerHTML = '<p>Không có lịch sử kiểm tra nào.</p>';
-        return;
+    // Hàm hiển thị kết quả trong popup
+    function showResultPopup(message, status) {
+        certificateStatusElement.innerText = message; // Gán thông báo
+        certificateStatusElement.style.color =
+            status === 'success' ? 'green' : status === 'error' ? 'red' : 'blue';
+        resultContainer.style.display = 'block'; // Hiển thị popup
     }
 
-    history.forEach(entry => {
-        const entryDiv = document.createElement('div');
-        entryDiv.className = 'history-entry';
-        entryDiv.innerHTML = `
-            <p><strong>Trang:</strong> ${entry.site}</p>
-            <p><strong>Trạng thái:</strong> ${entry.status}</p>
-            <p><strong>Thời gian:</strong> ${entry.timestamp}</p>
-        `;
-        historyContainer.appendChild(entryDiv);
-    });
-}
+    // Lưu kết quả kiểm tra vào lịch sử
+    function saveToHistory(site, result) {
+        const history = JSON.parse(localStorage.getItem('certHistory')) || []; // Lấy lịch sử
+        const newEntry = {
+            site, // Tên miền
+            timestamp: new Date().toLocaleString(), // Thời gian kiểm tra
+            result, // Kết quả kiểm tra
+        };
 
-// Xóa lịch sử
-function clearHistory() {
-    localStorage.removeItem('certificateHistory');
-    renderHistory();
-}
+        // Giới hạn số lượng lịch sử (tối đa 20 mục)
+        history.push(newEntry);
+        if (history.length > 20) {
+            history.shift(); // Xóa mục đầu tiên nếu vượt quá giới hạn
+        }
+
+        // Lưu lịch sử vào localStorage
+        localStorage.setItem('certHistory', JSON.stringify(history));
+    }
+
+    // Hiển thị lịch sử kiểm tra từ localStorage
+    function renderHistory() {
+        const history = JSON.parse(localStorage.getItem('certHistory')) || [];
+        historyContainer.innerHTML = ''; // Xóa nội dung cũ
+
+        if (history.length === 0) {
+            historyContainer.innerHTML = '<p>Không có lịch sử kiểm tra nào.</p>';
+            return;
+        }
+
+        history.forEach((entry) => {
+            const entryDiv = document.createElement('div');
+            entryDiv.className = 'history-entry';
+            entryDiv.innerHTML = `
+            <p><strong>Trang:</strong> ${entry.site}</p>
+            <p><strong>Thời gian:</strong> ${entry.timestamp}</p>
+            <p><strong>Kết quả:</strong> ${entry.result}</p>
+        `;
+            historyContainer.appendChild(entryDiv);
+        });
+    }
+
+    // Xóa lịch sử kiểm tra
+    function clearHistory() {
+        localStorage.removeItem('certHistory');
+        renderHistory();
+    }
+
+    // Chuyển hướng về trang index
+    function redirectToIndex() {
+        window.open('index.html', '_blank');
+    }
+
+});
+

@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CT Extension</title>
     <link rel="stylesheet" href="styles.css">
+    <!-- Prism.js Styles -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
 </head>
 
 <body>
@@ -14,18 +16,22 @@
         <p>Trang hiện tại: <span id="current-site">Loading...</span></p>
         <div id="loading-spinner" class="spinner"></div>
         <p>Trạng thái chứng chỉ: <span id="certificate-status">Loading...</span></p>
-        <button onclick="redirectToIndex()">Xem chi tiết</button>
+        <!-- <button onclick="redirectToIndex()">Xem chi tiết</button> -->
+        <div id="result-container" class="hidden">
+            <h3>Kết quả kiểm tra:</h3>
+            <p id="result"></p>
+        </div>
 
-        <hr>
-        <h2>Lịch sử kiểm tra</h2>
+
+        <!-- <h2>Lịch sử kiểm tra</h2>
         <div id="history-container">
             <div class="history-entry">
                 <strong>example.com</strong>
                 <p>Kết quả: Valid</p>
                 <p>Ngày: 19/01/2025</p>
             </div>
-        </div>
-        <button onclick="clearHistory()">Xóa lịch sử</button>
+        </div> -->
+        <!-- <button onclick="clearHistory()">Xóa lịch sử</button> -->
     </div>
 
     <script src="popup.js"></script>

@@ -25,6 +25,7 @@ chrome.action.onClicked.addListener(async (tab) => {
     }
 });
 
+// Hàm kiểm tra chứng chỉ (gọi từ API)
 async function checkCertificate(domain) {
     try {
         const response = await fetch("http://localhost:8080/verify_certificate", {
@@ -45,12 +46,3 @@ async function checkCertificate(domain) {
         return { valid: false, message: "Error verifying certificate." };
     }
 }
-
-document.getElementById("check-button").addEventListener("click", async () => {
-    const domain = prompt("Enter domain to check:");
-    if (domain) {
-        const result = await checkCertificate(domain);
-        alert(result.message);
-    }
-});
-
