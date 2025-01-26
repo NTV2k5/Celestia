@@ -11,66 +11,6 @@
     <!-- Prism.js Styles -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
 
-    <style>
-        #home-section {
-            position: relative;
-            background: linear-gradient(135deg, #4CAF50, #007BFF);
-            padding: 50px 20px;
-            color: white;
-            text-align: center;
-            border-radius: 10px;
-            margin: 45px 20px 0;
-            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
-            z-index: 5;
-        }
-
-        /* Lớp phủ (overlay) cho ảnh */
-        #home-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1;
-            border-radius: 10px;
-        }
-
-        #home-section * {
-            position: relative;
-            z-index: 2;
-        }
-
-        /* Text bên trong */
-        #home-section h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-        }
-
-        #home-section p {
-            font-size: 1.2rem;
-            color: #fff;
-        }
-
-        /* Nút hành động */
-        #home-section .primary-button {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 1rem;
-            color: white;
-            background: #4caf50;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            text-decoration: none;
-        }
-
-        #home-section .primary-button:hover {
-            background: #12c465ae;
-        }
-    </style>
 </head>
 
 <body>
@@ -79,13 +19,13 @@
         <aside class="sidebar">
             <nav>
                 <ul class="menu">
-                    <li><a href="#trang-chu" id="trang-chu" data-action="home">Trang chủ</a></li>
-                    <li><a href="#kiem-tra-chung-chi" id="kiem-tra-chung-chi" data-action="check">Kiểm tra chứng chỉ</a>
+                    <li><a href="#trang-chu" id="trang-chu" data-action="home">Home</a></li>
+                    <li><a href="#kiem-tra-chung-chi" id="kiem-tra-chung-chi" data-action="check">Check certificate</a>
                     </li>
-                    <li><a href="#lich-su-kiem-tra" id="lich-su-kiem-tra" data-action="history">Lịch sử kiểm tra</a>
+                    <li><a href="#lich-su-kiem-tra" id="lich-su-kiem-tra" data-action="history">Test history</a>
                     </li>
-                    <li><a href="#cai-dat" id="cai-dat" data-action="settings">Cài đặt</a></li>
-                    <li><a href="#ve-chung-toi" id="ve-chung-toi" data-action="about">Về chúng tôi</a></li>
+                    <li><a href="#cai-dat" id="cai-dat" data-action="settings">Setting</a></li>
+                    <li><a href="#ve-chung-toi" id="ve-chung-toi" data-action="about">About</a></li>
                 </ul>
             </nav>
         </aside>
@@ -95,9 +35,9 @@
 
             <!-- Home Section -->
             <section id="home-section" class="hidden content-area">
-                <h1>Chào mừng bạn đến với Certificate Transparency!</h1>
-                <p>Kiểm tra độ minh bạch của website và bảo vệ thông tin của bạn ngay bây giờ.</p>
-                <a href="#kiem-tra-chung-chi" id="start-check-button" class="primary-button">Bắt đầu kiểm tra</a>
+                <h1>Welcome to Certificate Transparency!</h1>
+                <p>Check website transparency and protect your information now.</p>
+                <a href="#kiem-tra-chung-chi" id="start-check-button" class="primary-button">Start checking</a>
 
             </section>
 
@@ -105,34 +45,37 @@
             <div id="introduction-container">
                 <h1>Introduction - Certificate Transparency Browser Extension</h1>
                 <div class="introduction-section">
-                    <h2>Nâng Cấp Internet Với Bảo Mật Chứng Nhận</h2>
+                    <h2>Upgrade Your Internet With Certified Security</h2>
                     <p>
-                        Certificate Transparency Browser Extension mang đến sự an toàn và minh bạch cho việc duyệt web
-                        của bạn.
+                        Certificate Transparency Browser Extension brings security and transparency to your web
+                        browsing.
                     </p>
                     <p>
-                        Với
-                        công
-                        nghệ Certificate Transparency (CT) tích hợp với Blockchain Celestia, tiện ích mở rộng này giúp
-                        bạn
-                        kiểm tra và xác thực các chứng nhận SSL/TLS một cách nhanh chóng và chính xác.
+                        With
+
+                        Certificate Transparency (CT) technology integrated with Celestia Blockchain, this extension
+                        helps
+
+                        you
+
+                        check and validate SSL/TLS certificates quickly and accurately.
                     </p>
                 </div>
                 <div class="introduction-section">
-                    <h2>Tính Năng Chính:</h2>
-                    <p> Đăng ký và lưu trữ chứng nhận: Ghi nhận và lưu trữ các chứng nhận SSL/TLS trên blockchain để đảm
-                        bảo tính minh bạch và bảo mật.</p>
-                    <p>Xác thực chứng nhận: Kiểm tra và xác thực tính hợp lệ của các chứng nhận ngay lập tức.</p>
-                    <p>Quản lý danh sách xám: Giám sát các chứng nhận đáng ngờ và ngăn chặn các mối đe dọa tiềm ẩn.</p>
-                    <p>Quản lý sự kiện bảo mật: Theo dõi và ghi nhận các sự kiện bảo mật để đảm bảo an toàn cho bạn.</p>
-                    <p>Phân quyền quản lý: Cấp quyền truy cập và quản lý dữ liệu chứng nhận cho các bên liên quan.</p>
+                    <h2>Key Features:</h2>
+                    <p> Certificate Registration and Storage: Record and store SSL/TLS certificates on the blockchain to
+                        ensure transparency and security.</p>
+                    <p>Certificate Validation: Check and validate the validity of certificates instantly.</p>
+                    <p>Graylist Management: Monitor suspicious certificates and block potential threats.</p>
+                    <p>Security Event Management: Track and log security events to keep you safe.</p>
+                    <p>Decentralized management: Grant access and management of certification data to stakeholders.</p>
                 </div>
                 <div class="introduction-section">
-                    <h2>Tại Sao Chọn Prism CT Browser Extension?</h2>
-                    <p> Minh bạch và Bảo mật: Tận dụng Blockchain Celestia để đảm bảo tính minh bạch và bảo mật tuyệt
-                        đối cho các chứng nhận của bạn. </p>
-                    <p> Dễ sử dụng: Giao diện thân thiện và dễ dàng sử dụng cho mọi người.</p>
-                    <p>Nhanh chóng và Hiệu quả: Xử lý và xác thực chứng nhận một cách nhanh chóng và hiệu quả.</p>
+                    <h2>Why Choose Prism CT Browser Extension?</h2>
+                    <p>Transparency and Security: Leverage the Celestia Blockchain to ensure absolute transparency and
+                        security for your certificates.</p>
+                    <p>Easy to use: Friendly interface and easy to use for everyone.</p>
+                    <p>Fast and Efficient: Process and validate certificates quickly and efficiently.</p>
                 </div>
 
 
@@ -157,12 +100,12 @@
                 <header class="popup-header">
                     <img src="icons/icon48.png" alt="Certificate Logo" class="logo">
                     <h2>Certificate Transparency</h2>
-                    <p>Kiểm tra độ minh bạch của website dễ dàng.</p>
+                    <p>Check website transparency easily.</p>
                 </header>
 
                 <main>
                     <!-- Input Field -->
-                    <input type="text" id="url-input" placeholder="Nhập URL cần kiểm tra" />
+                    <input type="text" id="url-input" placeholder="Enter the URL to check" />
                     <!-- Check Button -->
                     <button id="check-button" class="primary-button">Check Now</button>
 
@@ -170,14 +113,15 @@
 
                     <!-- Result Display -->
                     <div id="result-container" class="hidden">
-                        <h3>Kết quả kiểm tra:</h3>
+                        <h3>Test results:</h3>
                         <p id="result"></p>
                     </div>
 
                     <!-- History Section -->
                     <section id="history-container" class="hidden content-area">
-                        <h3>Lịch sử kiểm tra</h3>
-                        <button id="load-history-button" class="secondary-button">Tải lịch sử từ Blockchain</button>
+                        <h3>Test history</h3>
+                        <button id="load-history-button" class="secondary-button">Download history from
+                            Blockchain</button>
                         <div id="history-list"></div>
                     </section>
                 </main>
@@ -187,18 +131,18 @@
 
             <!-- Settings Section -->
             <section id="settings-section" class="hidden content-area">
-                <h2>Cài đặt</h2>
+                <h2>Setting</h2>
                 <ul class="settings-list">
                     <li>
-                        <h3>Tùy chỉnh giao diện</h3>
-                        <p>Điều chỉnh màu nền cho giao diện của Extension.</p>
-                        <button id="customize-interface" class="settings-button">Tùy chỉnh</button>
+                        <h3>Customize the interface</h3>
+                        <p>Adjust the background color for the Extension interface.</p>
+                        <button id="customize-interface" class="settings-button">Customize</button>
                         <!-- Menu tùy chỉnh giao diện -->
                         <div id="customize-menu" class="hidden">
                             <select id="theme-select">
-                                <option value="light">Sáng</option>
-                                <option value="dark">Tối</option>
-                                <option value="system">Mặc định theo máy</option>
+                                <option value="light">Light</option>
+                                <option value="dark">Dark</option>
+                                <option value="system">Default by machine</option>
                             </select>
                         </div>
                     </li>
@@ -208,29 +152,29 @@
                         <button id="manage-access" class="settings-button">Quản lý</button>
                     </li> -->
                     <li>
-                        <h3>Thông báo</h3>
-                        <p>Bật hoặc tắt thông báo ứng dụng.</p>
-                        <button id="notifications" class="settings-button">Thiết lập</button>
+                        <h3>Notification</h3>
+                        <p>Turn app notifications on or off.</p>
+                        <button id="notifications" class="settings-button">Establish</button>
                     </li>
                     <li>
-                        <h3>Cài đặt chức năng</h3>
-                        <p>Kích hoạt hoặc tùy chỉnh các chức năng của ứng dụng.</p>
-                        <button id="function-settings" class="settings-button">Cài đặt</button>
+                        <h3>Function settings</h3>
+                        <p>Enable or customize app functions.</p>
+                        <button id="function-settings" class="settings-button">Setting</button>
                     </li>
-                    <li>
+                    <!-- <li>
                         <h3>Ngôn ngữ</h3>
                         <p>Thay đổi ngôn ngữ giao diện ứng dụng.</p>
                         <button id="language" class="settings-button">Chọn ngôn ngữ</button>
+                    </li> -->
+                    <li>
+                        <h3>Backup and Restore</h3>
+                        <p>Create a backup or restore your data.</p>
+                        <button id="backup-restore" class="settings-button">Backup/Restore</button>
                     </li>
                     <li>
-                        <h3>Sao lưu và khôi phục</h3>
-                        <p>Tạo bản sao lưu hoặc khôi phục dữ liệu của bạn.</p>
-                        <button id="backup-restore" class="settings-button">Sao lưu/Khôi phục</button>
-                    </li>
-                    <li>
-                        <h3>Cập nhật</h3>
-                        <p>Kiểm tra và cài đặt phiên bản mới nhất của ứng dụng.</p>
-                        <button id="update" class="settings-button">Cập nhật</button>
+                        <h3>Update</h3>
+                        <p>Check and install the latest version of the application.</p>
+                        <button id="update" class="settings-button">Update</button>
                     </li>
                 </ul>
 
@@ -238,42 +182,42 @@
 
 
             <div id="about-container" class="hidden content-area">
-                <h2>Về chúng tôi</h2>
+                <h2>About</h2>
                 <div class="about-section">
-                    <h3>Tên Extension:</h3>
+                    <h3>Extension Name:</h3>
                     <p>Certificate Transparency Browser Extension</p>
                 </div>
                 <div class="about-section">
-                    <h3>Phiên bản:</h3>
+                    <h3>Version:</h3>
                     <p>1.0.0</p>
                 </div>
                 <div class="about-section">
-                    <h3>Nhà phát triển:</h3>
-                    <p>Nhóm phát triển GDU 07</p>
+                    <h3>Developer:</h3>
+                    <p>GDU 07 Development Team</p>
                 </div>
                 <div class="about-section">
-                    <h3>Mô tả:</h3>
+                    <h3>Describe:</h3>
                     <p>
-                        Công cụ giúp kiểm tra chứng chỉ minh bạch của các trang web,
-                        bảo vệ người dùng khỏi các nguy cơ bảo mật.
+                        A tool that helps check the transparency certificates of websites, protecting users from
+                        security risks.
                     </p>
                 </div>
                 <div class="about-section">
-                    <h3>Quyền truy cập:</h3>
+                    <h3>Access Rights:</h3>
                     <ul>
-                        <li>Kết nối mạng</li>
-                        <li>Lưu trữ cục bộ (local storage)</li>
+                        <li>Network connection</li>
+                        <li>Local storage</li>
                     </ul>
                 </div>
                 <div class="about-section">
-                    <h3>Chính sách quyền riêng tư:</h3>
+                    <h3>Privacy Policy:</h3>
                     <p>
-                        Chúng tôi cam kết không thu thập hoặc chia sẻ dữ liệu cá nhân của bạn.
-                        Vui lòng đọc thêm tại <a href="#" target="_blank">chính sách quyền riêng tư</a>.
+                        We promise not to collect or share your personal data.
+                        Please read more at <a href="#" target="_blank">privacy policy</a>.
                     </p>
                 </div>
                 <div class="about-section">
-                    <h3>Cập nhật lần cuối:</h3>
+                    <h3>Last updated:</h3>
                     <p>16/01/2025</p>
                 </div>
 

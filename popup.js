@@ -46,24 +46,24 @@ document.addEventListener('DOMContentLoaded', async () => {
                 // Kiểm tra nếu URL rỗng
                 if (!url) {
                     resultContainer.style.display = 'block';
-                    resultText.textContent = 'Vui lòng nhập URL hợp lệ.';
+                    resultText.textContent = 'Please enter a valid URL.';
                     resultText.style.color = 'red';
                     return;
                 }
 
                 // Giả lập kiểm tra chứng chỉ (bạn có thể thay bằng logic kiểm tra thực tế)
                 resultContainer.style.display = 'block';
-                resultText.textContent = `Đang kiểm tra chứng chỉ cho URL: ${hostname}`;
+                resultText.textContent = `Checking certificate for URL: ${hostname}`;
                 resultText.style.color = 'blue';
 
                 setTimeout(() => {
                     // Mô phỏng kết quả kiểm tra
                     const isValid = Math.random() > 0.5; // Kết quả ngẫu nhiên (true hoặc false)
                     if (isValid) {
-                        resultText.textContent = `Chứng chỉ của ${hostname} là hợp lệ!`;
+                        resultText.textContent = `Certificate of ${hostname} is valid!`;
                         resultText.style.color = 'green';
                     } else {
-                        resultText.textContent = `Chứng chỉ của ${hostname} không hợp lệ hoặc thiếu minh bạch.`;
+                        resultText.textContent = `Certificate of ${hostname} is invalid or lacking transparency.`;
                         resultText.style.color = 'red';
                     }
                     resultText.textContent = resultMessage;
@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }, 3000); // Thời gian giả lập kiểm tra (3 giây)
 
             } catch (error) {
-                certificateStatusElement.innerText = 'Lỗi khi kiểm tra chứng chỉ';
+                certificateStatusElement.innerText = 'Error while checking certificate';
                 certificateStatusElement.className = 'invalid';
                 // console.error('Error fetching certificate status:', error);
             } finally {
@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 renderHistory();
             }
         } else {
-            currentSiteElement.innerText = 'Không thể lấy thông tin trang web';
+            currentSiteElement.innerText = 'Unable to get website information';
         }
 
 
@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         historyContainer.innerHTML = ''; // Xóa nội dung cũ
 
         if (history.length === 0) {
-            historyContainer.innerHTML = '<p>Không có lịch sử kiểm tra nào.</p>';
+            historyContainer.innerHTML = '<p>No test history.</p>';
             return;
         }
 
@@ -137,9 +137,9 @@ document.addEventListener('DOMContentLoaded', async () => {
             const entryDiv = document.createElement('div');
             entryDiv.className = 'history-entry';
             entryDiv.innerHTML = `
-            <p><strong>Trang:</strong> ${entry.site}</p>
-            <p><strong>Thời gian:</strong> ${entry.timestamp}</p>
-            <p><strong>Kết quả:</strong> ${entry.result}</p>
+            <p><strong>Site:</strong> ${entry.site}</p>
+            <p><strong>Time:</strong> ${entry.timestamp}</p>
+            <p><strong>Result:</strong> ${entry.result}</p>
         `;
             historyContainer.appendChild(entryDiv);
         });

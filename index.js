@@ -168,27 +168,27 @@ async function run() {
 
         // Kiểm tra nếu URL rỗng
         if (!url) {
-            showResult('Vui lòng nhập URL hợp lệ.', 'error');
+            showResult('Please enter a valid URL.', 'error');
             return;
         }
 
         // Hiển thị thông báo đang kiểm tra
-        showResult(`Đang kiểm tra chứng chỉ cho URL: ${url}`, 'info');
+        showResult(`Checking certificate for URL: ${url}`, 'info');
         resultText.style.color = 'blue';
 
         // Giả lập kiểm tra chứng chỉ (có thể thay bằng logic thực tế)
         setTimeout(() => {
             const isValid = Math.random() > 0.5; // Kết quả ngẫu nhiên
             const resultMessage = isValid
-                ? `Chứng chỉ của ${url} là hợp lệ!`
-                : `Chứng chỉ của ${url} không hợp lệ hoặc thiếu minh bạch.`;
+                ? `Certificate of ${url} is valid!`
+                : `Certificate of ${url} is invalid or lacking transparency.`;
             const resultStatus = isValid ? resultText.style.color = 'green' : resultText.style.color = 'red';
 
             // Hiển thị kết quả
             showResult(resultMessage, resultStatus);
 
             // Lưu kết quả vào lịch sử
-            saveToHistory(url, isValid ? 'Hợp lệ' : 'Không minh bạch hoặc không hợp lệ');
+            saveToHistory(url, isValid ? 'Valid' : 'Not transparent or invalid');
 
             // Cập nhật hiển thị lịch sử
             displayHistory();
@@ -225,14 +225,14 @@ async function run() {
 
         // Lưu lịch sử mới vào localStorage
         localStorage.setItem("certHistory", JSON.stringify(history));
-        console.log("Lịch sử sau khi lưu:", history); // Debugging
+        console.log("History after saving:", history); // Debugging
     }
 
     // Hiển thị lịch sử khi có thay đổi
     function displayHistory() {
         const history = JSON.parse(localStorage.getItem("certHistory")) || []; // Lấy lịch sử từ localStorage
         if (history.length === 0) {
-            historyList.innerHTML = "<p>Chưa có lịch sử kiểm tra nào.</p>";
+            historyList.innerHTML = "<p>No test history yet.</p>";
             return;
         }
 
@@ -242,8 +242,8 @@ async function run() {
             <div class="history-entry" data-index="${index}">
                 <strong>${entry.domain}</strong>
                 <p>${entry.date}</p>
-                <p>Kết quả: ${entry.result}</p>
-                <button class="delete-button" data-index="${index}">Xóa</button>
+                <p>Result: ${entry.result}</p>
+                <button class="delete-button" data-index="${index}">Delete</button>
             </div>
         `)
             .join("");
@@ -267,10 +267,10 @@ async function run() {
     }
 
     function clearHistory() {
-        if (confirm("Bạn có chắc chắn muốn xóa toàn bộ lịch sử?")) {
+        if (confirm("Are you sure you want to delete all history?")) {
             localStorage.removeItem("certHistory");
             displayHistory();
-            alert("Lịch sử đã được xóa.");
+            alert("History cleared.");
         }
     }
 
@@ -330,45 +330,45 @@ async function run() {
 
     // Thông báo
     notifications.addEventListener('click', () => {
-        const enableNotifications = confirm('Bật thông báo?');
+        const enableNotifications = confirm('Turn on notifications?');
         if (enableNotifications) {
-            alert('Thông báo đã được bật.');
+            alert('Notifications are enabled.');
         } else {
-            alert('Thông báo đã bị tắt.');
+            alert('Notifications have been turned off.');
         }
     });
 
 
     // Cài đặt chức năng
     functionSettings.addEventListener('click', () => {
-        alert('Mở menu cài đặt chức năng chi tiết.');
+        alert('Open the detailed function settings menu.');
     });
 
     // Ngôn ngữ
-    language.addEventListener('click', () => {
-        const selectedLanguage = prompt('Chọn ngôn ngữ (vi/eng):', 'vi');
-        if (selectedLanguage) {
-            alert(`Ngôn ngữ đã được thay đổi thành: ${selectedLanguage}`);
-        } else {
-            alert('Ngôn ngữ không thay đổi.');
-        }
-    });
+    // language.addEventListener('click', () => {
+    //     const selectedLanguage = prompt('Chọn ngôn ngữ (vi/eng):', 'vi');
+    //     if (selectedLanguage) {
+    //         alert(`Ngôn ngữ đã được thay đổi thành: ${selectedLanguage}`);
+    //     } else {
+    //         alert('Ngôn ngữ không thay đổi.');
+    //     }
+    // });
 
     // Sao lưu và khôi phục
     backupRestore.addEventListener('click', () => {
-        const action = prompt('Bạn muốn: \n(1) Sao lưu \n(2) Khôi phục dữ liệu', '1');
+        const action = prompt('You want: \n(1) Backup \n(2) Data Recovery', '1');
         if (action === '1') {
-            alert('Dữ liệu đã được sao lưu thành công!');
+            alert('Data has been backed up successfully!');
         } else if (action === '2') {
-            alert('Khôi phục dữ liệu từ bản sao lưu.');
+            alert('Restore data from backup.');
         } else {
-            alert('Không thực hiện hành động nào.');
+            alert('Take no action.');
         }
     });
 
     // Cập nhật
     update.addEventListener('click', () => {
-        alert('Phiên bản hiện tại là bản cập nhật mới nhất.');
+        alert('The current version is the latest update.');
     });
 
 
