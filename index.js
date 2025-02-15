@@ -14,6 +14,7 @@ async function run() {
     const historyList = document.getElementById("history-list");
     const clearButton = document.getElementById("clear-history");
     const popupContainer = document.querySelector('.popup-container');
+    const popupHeader = document.querySelector('.popup-header');
     const menuItems = document.querySelectorAll('.menu li a');
     const settingsPage = document.getElementById('settings-section');
     const customizeInterface = document.getElementById('customize-interface');
@@ -21,7 +22,6 @@ async function run() {
     const themeSelect = document.getElementById('theme-select');
     // const manageAccess = document.getElementById('manage-access');
     const notifications = document.getElementById('notifications');
-    const functionSettings = document.getElementById('function-settings');
     const language = document.getElementById('language');
     // const personalData = document.getElementById('personal-data');
     const backupRestore = document.getElementById('backup-restore');
@@ -53,6 +53,7 @@ async function run() {
                 homePage.style.display = 'none';
                 introductionPage.style.display = 'none';
                 popupContainer.style.display = 'block';
+                popupHeader.style.display = 'block';
                 checkButton.style.display = 'block';
                 urlInput.style.display = 'block';
                 resultContainer.style.display = 'block';
@@ -68,6 +69,7 @@ async function run() {
                 homePage.style.display = 'none';
                 introductionPage.style.display = 'none';
                 popupContainer.style.display = 'block';
+                popupHeader.style.display = 'block';
                 checkButton.style.display = 'none';
                 urlInput.style.display = 'none';
                 resultContainer.style.display = 'none';
@@ -81,20 +83,26 @@ async function run() {
 
             case 'settings':
                 // Ẩn popup ở các trang khác
-                popupContainer.style.display = 'none';
                 homePage.style.display = 'none';
                 introductionPage.style.display = 'none';
                 aboutPage.style.display = 'none';
+                resultContainer.style.display = 'none';
+                popupHeader.style.display = 'none';
+                historyContainer.style.display = 'none';
                 // Hiển thị trang settings
+                popupContainer.style.display = 'block';
                 settingsPage.style.display = 'block';
                 break;
             case 'about':
                 // Ẩn popup ở các trang khác
-                popupContainer.style.display = 'none';
                 homePage.style.display = 'none';
                 introductionPage.style.display = 'none';
                 settingsPage.style.display = 'none';
+                resultContainer.style.display = 'none';
+                popupHeader.style.display = 'none';
+                historyContainer.style.display = 'none';
                 // Hiển thị trang about
+                popupContainer.style.display = 'block';
                 aboutPage.style.display = 'block';
                 break;
 
@@ -169,6 +177,7 @@ async function run() {
         // Kiểm tra nếu URL rỗng
         if (!url) {
             showResult('Please enter a valid URL.', 'error');
+            resultStatus = resultText.style.color = 'black';
             return;
         }
 
@@ -336,12 +345,6 @@ async function run() {
         } else {
             alert('Notifications have been turned off.');
         }
-    });
-
-
-    // Cài đặt chức năng
-    functionSettings.addEventListener('click', () => {
-        alert('Open the detailed function settings menu.');
     });
 
     // Ngôn ngữ

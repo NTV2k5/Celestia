@@ -73,8 +73,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                     // Cập nhật hiển thị lịch sử
                     renderHistory();
-                    // // Cập nhật hiển thị lịch sử
-                    // displayHistory();
                 }, 3000); // Thời gian giả lập kiểm tra (3 giây)
 
             } catch (error) {
