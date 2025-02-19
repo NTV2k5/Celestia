@@ -67,7 +67,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                         resultText.style.color = 'red';
                     }
                     resultText.textContent = resultMessage;
-
+                    // thêm Kq vào blockchain
+                    myBlockChain.addBlock(new Block(myBlockChain.chain.length, new Date().toLocaleString(), { domain: hostname, result: resultMessage }));
                     // Lưu kết quả vào lịch sử
                     saveToHistory(hostname, resultMessage);
 
