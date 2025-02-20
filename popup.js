@@ -1,159 +1,108 @@
-document.addEventListener('DOMContentLoaded', async () => {
-    const currentSiteElement = document.getElementById('current-site');
-    const certificateStatusElement = document.getElementById('certificate-status');
-    const spinnerElement = document.getElementById('loading-spinner');
-    const historyContainer = document.getElementById('history-container');
-    const resultContainer = document.getElementById('result-container');
-    const resultText = document.getElementById('result');
+require('dotenv').config();
+const express = require('express');
+const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
+const https = require('https');
+const cors = require('cors');
 
+const app = express();
+const PORT = process.env.PORT || 5000;
+const JWT_SECRET = process.env.JWT_SECRET || 'your_secret_key';
 
-    // Hiển thị spinner trong khi tải
-    spinnerElement.style.display = 'block';
-    certificateStatusElement.style.display = 'none';
+app.use(express.json());
+app.use(cors());
 
-    // Sử dụng Chrome Tabs API để lấy thông tin tab hiện tại
-    chrome.tabs.query({ active: true, currentWindow: true }, async (tabs) => {
-        if (tabs.length > 0) {
-            const tab = tabs[0];
-            const url = new URL(tab.url);
-            const hostname = url.hostname;
+// MongoDB Connection
+mongoose.connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+}).then(() => console.log('MongoDB connected'))
+  .catch(err => console.error(err));
 
-            // Hiển thị hostname
-            currentSiteElement.innerText = hostname;
+// Certificate Schema
+const CertCheckSchema = new mongoose.Schema({
+    url: String,
+    status: String,
+    validTo: String,
+    checkedAt: { type: Date, default: Date.now }
+});
+const CertCheck = mongoose.model('CertCheck', CertCheckSchema);
 
-            try {
-                // // API giả lập kiểm tra chứng chỉ
-                // const response = await fetch(`https://api.certificatetransparency.dev/v1/check?domain=${hostname}`);
-                // const data = await response.json();
-
-                // let statusText = '';
-                // let statusClass = '';
-                // if (response.ok && data) {
-                //     statusText = data.status || 'Hợp lệ';
-                //     statusClass = data.status === 'Hợp lệ' ? 'valid' : 'invalid';
-                // } else {
-                //     statusText = 'Không hợp lệ';
-                //     statusClass = 'invalid';
-                // }
-
-                // certificateStatusElement.innerText = statusText;
-                // certificateStatusElement.className = statusClass;
-
-                // // Lưu trạng thái vào localStorage
-                // saveToHistory(hostname, statusText);
-
-
-                // Kiểm tra nếu URL rỗng
-                if (!url) {
-                    resultContainer.style.display = 'block';
-                    resultText.textContent = 'Please enter a valid URL.';
-                    resultText.style.color = 'red';
-                    return;
-                }
-
-                // Giả lập kiểm tra chứng chỉ (bạn có thể thay bằng logic kiểm tra thực tế)
-                resultContainer.style.display = 'block';
-                resultText.textContent = `Checking certificate for URL: ${hostname}`;
-                resultText.style.color = 'blue';
-
-                setTimeout(() => {
-                    // Mô phỏng kết quả kiểm tra
-                    const isValid = Math.random() > 0.5; // Kết quả ngẫu nhiên (true hoặc false)
-                    if (isValid) {
-                        resultText.textContent = `Certificate of ${hostname} is valid!`;
-                        resultText.style.color = 'green';
-                    } else {
-                        resultText.textContent = `Certificate of ${hostname} is invalid or lacking transparency.`;
-                        resultText.style.color = 'red';
-                    }
-                    resultText.textContent = resultMessage;
-                    // thêm Kq vào blockchain
-                    myBlockChain.addBlock(new Block(myBlockChain.chain.length, new Date().toLocaleString(), { domain: hostname, result: resultMessage }));
-                    // Lưu kết quả vào lịch sử
-                    saveToHistory(hostname, resultMessage);
-
-                    // Cập nhật hiển thị lịch sử
-                    renderHistory();
-                }, 3000); // Thời gian giả lập kiểm tra (3 giây)
-
-            } catch (error) {
-                certificateStatusElement.innerText = 'Error while checking certificate';
-                certificateStatusElement.className = 'invalid';
-                // console.error('Error fetching certificate status:', error);
-            } finally {
-                // Ẩn spinner sau khi hoàn tất
-                spinnerElement.style.display = 'none';
-                certificateStatusElement.style.display = 'block';
-
-                // Hiển thị lịch sử từ localStorage
-                renderHistory();
-            }
-        } else {
-            currentSiteElement.innerText = 'Unable to get website information';
-        }
-
-
+// Middleware for JWT authentication
+const authenticateToken = (req, res, next) => {
+    const token = req.header('Authorization');
+    if (!token) return res.status(401).json({ error: 'Access denied' });
+    
+    jwt.verify(token.split(' ')[1], JWT_SECRET, (err, user) => {
+        if (err) return res.status(403).json({ error: 'Invalid or expired token' });
+        req.user = user;
+        next();
     });
+};
 
-    // Hàm hiển thị kết quả trong popup
-    function showResultPopup(message, status) {
-        certificateStatusElement.innerText = message; // Gán thông báo
-        certificateStatusElement.style.color =
-            status === 'success' ? 'green' : status === 'error' ? 'red' : 'blue';
-        resultContainer.style.display = 'block'; // Hiển thị popup
-    }
-
-    // Lưu kết quả kiểm tra vào lịch sử
-    function saveToHistory(site, result) {
-        const history = JSON.parse(localStorage.getItem('certHistory')) || []; // Lấy lịch sử
-        const newEntry = {
-            site, // Tên miền
-            timestamp: new Date().toLocaleString(), // Thời gian kiểm tra
-            result, // Kết quả kiểm tra
-        };
-
-        // Giới hạn số lượng lịch sử (tối đa 20 mục)
-        history.push(newEntry);
-        if (history.length > 20) {
-            history.shift(); // Xóa mục đầu tiên nếu vượt quá giới hạn
-        }
-
-        // Lưu lịch sử vào localStorage
-        localStorage.setItem('certHistory', JSON.stringify(history));
-    }
-
-    // Hiển thị lịch sử kiểm tra từ localStorage
-    function renderHistory() {
-        const history = JSON.parse(localStorage.getItem('certHistory')) || [];
-        historyContainer.innerHTML = ''; // Xóa nội dung cũ
-
-        if (history.length === 0) {
-            historyContainer.innerHTML = '<p>No test history.</p>';
-            return;
-        }
-
-        history.forEach((entry) => {
-            const entryDiv = document.createElement('div');
-            entryDiv.className = 'history-entry';
-            entryDiv.innerHTML = `
-            <p><strong>Site:</strong> ${entry.site}</p>
-            <p><strong>Time:</strong> ${entry.timestamp}</p>
-            <p><strong>Result:</strong> ${entry.result}</p>
-        `;
-            historyContainer.appendChild(entryDiv);
+// Check SSL Certificate API
+app.post('/check', authenticateToken, async (req, res) => {
+    const { url } = req.body;
+    if (!url) return res.status(400).json({ error: 'URL is required' });
+    
+    try {
+        const hostname = url.replace(/^https?:\/\//, '');
+        const options = { hostname, port: 443, method: 'GET' };
+        
+        const reqTLS = https.request(options, (response) => {
+            const cert = response.socket.getPeerCertificate();
+            if (!cert || Object.keys(cert).length === 0) {
+                return res.status(400).json({ error: 'No certificate found' });
+            }
+            const status = cert.valid_to ? 'Valid' : 'Invalid';
+            
+            const certCheck = new CertCheck({ url, status, validTo: cert.valid_to });
+            certCheck.save();
+            
+            res.json({ url, status, validTo: cert.valid_to });
         });
+        reqTLS.on('error', (err) => res.status(500).json({ error: err.message }));
+        reqTLS.end();
+    } catch (error) {
+        res.status(500).json({ error: 'Server error' });
     }
-
-    // Xóa lịch sử kiểm tra
-    function clearHistory() {
-        localStorage.removeItem('certHistory');
-        renderHistory();
-    }
-
-    // Chuyển hướng về trang index
-    function redirectToIndex() {
-        window.open('index.html', '_blank');
-    }
-
 });
 
+// Get all check history
+app.get('/history', authenticateToken, async (req, res) => {
+    try {
+        const history = await CertCheck.find().sort({ checkedAt: -1 });
+        res.json(history);
+    } catch (error) {
+        res.status(500).json({ error: 'Server error' });
+    }
+});
+
+// Get history by specific domain
+app.get('/history/:url', authenticateToken, async (req, res) => {
+    try {
+        const { url } = req.params;
+        const history = await CertCheck.find({ url }).sort({ checkedAt: -1 });
+        res.json(history);
+    } catch (error) {
+        res.status(500).json({ error: 'Server error' });
+    }
+});
+
+// Delete history
+app.delete('/history', authenticateToken, async (req, res) => {
+    try {
+        await CertCheck.deleteMany({});
+        res.json({ message: 'History cleared' });
+    } catch (error) {
+        res.status(500).json({ error: 'Server error' });
+    }
+});
+
+// Generate JWT token (for testing, ideally use proper auth)
+app.post('/login', (req, res) => {
+    const token = jwt.sign({ user: 'admin' }, JWT_SECRET, { expiresIn: '1h' });
+    res.json({ token });
+});
+
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
