@@ -171,38 +171,100 @@ async function run() {
 
     // Xử lý sự kiện khi nhấn nút "Check Now"
     checkButton.addEventListener('click', () => {
-        // Lấy giá trị URL từ ô input
-        const url = urlInput.value.trim();
+        // Kiểm tra xem URL có hợp lệ không
+function isValidUrl(url) {
+    try {
+        new URL(url);
+        return true;
+    } catch (e) {
+        return false;
+    }
+}
 
-        // Kiểm tra nếu URL rỗng
-        if (!url) {
-            showResult('Please enter a valid URL.', 'error');
-            resultStatus = resultText.style.color = 'black';
-            return;
-        }
+// Hiển thị kết quả lên giao diện
+function showResult(message, status) {
+    resultText.innerText = message;
+    switch (status) {
+        case 'success':
+            resultText.style.color = 'green';
+            break;
+        case 'error':
+            resultText.style.color = 'red';
+            break;
+        case 'info':
+            resultText.style.color = 'blue';
+            break;
+        default:
+            resultText.style.color = 'black';
+    }
+}
 
-        // Hiển thị thông báo đang kiểm tra
-        showResult(`Checking certificate for URL: ${url}`, 'info');
-        resultText.style.color = 'blue';
+// Lưu kết quả vào lịch sử kiểm tra
+function saveToHistory(url, status) {
+    let history = JSON.parse(localStorage.getItem('sslCheckHistory')) || [];
+    history.unshift({ url, status, checkedAt: new Date().toLocaleString() });
+    localStorage.setItem('sslCheckHistory', JSON.stringify(history));
+}
 
-        // Giả lập kiểm tra chứng chỉ (có thể thay bằng logic thực tế)
-        setTimeout(() => {
-            const isValid = Math.random() > 0.5; // Kết quả ngẫu nhiên
-            const resultMessage = isValid
-                ? `Certificate of ${url} is valid!`
-                : `Certificate of ${url} is invalid or lacking transparency.`;
-            const resultStatus = isValid ? resultText.style.color = 'green' : resultText.style.color = 'red';
+// Hiển thị lịch sử kiểm tra lên giao diện
+function displayHistory() {
+    const historyList = document.getElementById('historyList');
+    historyList.innerHTML = ''; // Xóa danh sách cũ
 
-            // Hiển thị kết quả
-            showResult(resultMessage, resultStatus);
-
-            // Lưu kết quả vào lịch sử
-            saveToHistory(url, isValid ? 'Valid' : 'Not transparent or invalid');
-
-            // Cập nhật hiển thị lịch sử
-            displayHistory();
-        }, 3000); // Thời gian giả lập kiểm tra (3 giây)
+    let history = JSON.parse(localStorage.getItem('sslCheckHistory')) || [];
+    history.slice(0, 10).forEach(entry => {
+        const listItem = document.createElement('li');
+        listItem.innerHTML = `<strong>${entry.url}</strong> - ${entry.status} <small>(${entry.checkedAt})</small>`;
+        listItem.style.color = entry.status === 'Valid' ? 'green' : 'red';
+        historyList.appendChild(listItem);
     });
+}
+
+// Gửi request đến API để kiểm tra chứng chỉ SSL
+async function checkCertificate(url) {
+    try {
+        const response = await fetch(`https://your-api.com/check-ssl?url=${encodeURIComponent(url)}`);
+        const data = await response.json();
+        return data.isValid; // API trả về { isValid: true/false }
+    } catch (error) {
+        console.error('Error checking certificate:', error);
+        return false;
+    }
+}
+
+// Xử lý sự kiện khi nhấn nút "Check Now"
+document.getElementById('checkButton').addEventListener('click', async () => {
+    const urlInput = document.getElementById('urlInput');
+    const resultText = document.getElementById('resultText');
+
+    const url = urlInput.value.trim();
+
+    // Kiểm tra nếu URL rỗng hoặc không hợp lệ
+    if (!url || !isValidUrl(url)) {
+        showResult('Please enter a valid URL.', 'error');
+        return;
+    }
+
+    // Hiển thị thông báo đang kiểm tra
+    showResult(`Checking certificate for URL: ${url}`, 'info');
+
+    // Gọi API kiểm tra chứng chỉ SSL
+    const isValid = await checkCertificate(url);
+
+    // Hiển thị kết quả kiểm tra
+    const resultMessage = isValid
+        ? `Certificate of ${url} is valid!`
+        : `Certificate of ${url} is invalid or lacking transparency.`;
+
+    showResult(resultMessage, isValid ? 'success' : 'error');
+
+    // Lưu vào lịch sử và cập nhật giao diện
+    saveToHistory(url, isValid ? 'Valid' : 'Not transparent or invalid');
+    displayHistory();
+});
+
+// Hiển thị lịch sử khi tải trang
+document.addEventListener('DOMContentLoaded', displayHistory);
 
     function isValidDomain(domain) {
         const domainRegex = /^(?!:\/\/)([a-zA-Z0-9-_]{1,63}\.)+[a-zA-Z]{2,}$/;
