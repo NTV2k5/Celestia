@@ -261,7 +261,7 @@ document.getElementById('checkButton').addEventListener('click', async () => {
     // Lưu vào lịch sử và cập nhật giao diện
     saveToHistory(url, isValid ? 'Valid' : 'Not transparent or invalid');
     displayHistory();
-});
+})});
 
 // Hiển thị lịch sử khi tải trang
 document.addEventListener('DOMContentLoaded', displayHistory);
