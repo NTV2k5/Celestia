@@ -1,25 +1,38 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.19;
 
 contract CertificateTransparency {
-    // Mapping để lưu trữ chứng chỉ
-    mapping(address => uint256[]) public certificateMap;
+    address public owner;
 
-    // Sự kiện để thông báo khi một chứng chỉ được thêm
-    event CertificateAdded(address indexed owner, uint256 certificateId);
-
-    constructor() {}
-        // Thêm chứng chỉ mới vào blockchain
-    function addCertificate(uint256 certificateId) public {
-        require(certificateId != 0, "Certificate ID must be valid");  // Kiểm tra ID hợp lệ
-
-        certificateMap[msg.sender].push(certificateId);  // Lưu vào danh sách của người gửi
-
-        emit CertificateAdded(msg.sender, certificateId);  // Gửi sự kiện
+    struct Certificate {
+        string domain;
+        string issuer;
+        uint256 timestamp;
+        bool isRevoked;
     }
 
-    // Hàm để lấy danh sách chứng chỉ của một địa chỉ
-    function getCertificates(address owner) public view returns (uint256[] memory) {
-        return certificateMap[owner];
+    mapping(bytes32 => Certificate) public certificates;
+    event CertificateIssued(bytes32 indexed certHash, string domain, string issuer, uint256 timestamp);
+    event CertificateRevoked(bytes32 indexed certHash);
+
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Only owner can perform this action");
+        _;
+    }
+
+    constructor() {
+        owner = msg.sender;
+    }
+
+    function issueCertificate(string memory domain, string memory issuer) public onlyOwner {
+        bytes32 certHash = keccak256(abi.encodePacked(domain, issuer, block.timestamp));
+        certificates[certHash] = Certificate(domain, issuer, block.timestamp, false);
+        emit CertificateIssued(certHash, domain, issuer, block.timestamp);
+    }
+
+    function revokeCertificate(bytes32 certHash) public onlyOwner {
+        require(certificates[certHash].timestamp != 0, "Certificate does not exist");
+        certificates[certHash].isRevoked = true;
+        emit CertificateRevoked(certHash);
     }
 }
