@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate Transparency Extension</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="icons/icon48.png">
+    <!-- Prism.js Styles -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/4.5.0/web3.min.js"></script>
+    </body>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Sidebar Menu -->
+        <aside class="sidebar">
+            <nav>
+                <ul class="menu">
+                    <li><a href="#home" id="home" data-action="home">Home</a></li>
+                    <li><a href="#check" id="check-certificate" data-action="check">Check</a>
+                    </li>
+                    <li><a href="#history" id="test-history" data-action="history">History</a>
+                    </li>
+                    <li><a href="#settings" id="settings" data-action="settings">Setting</a></li>
+                    <li><a href="#about" id="about" data-action="about">About</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content content-area">
+
+            <!-- Home Section -->
+            <section id="home-section" class="hidden content-area">
+                <h1>Welcome to Certificate Transparency!</h1>
+                <p>Check website transparency and protect your information now.</p>
+                <a href="#kiem-tra-chung-chi" id="start-check-button" class="primary-button">Start checking</a>
+
+            </section>
+
+            <!-- Introduction -->
+            <div id="introduction-container">
+                <h1>Introduction - Certificate Transparency Browser Extension</h1>
+                <div class="introduction-section">
+                    <h2>Upgrade Your Internet With Certified Security</h2>
+                    <p>
+                        Certificate Transparency Browser Extension brings security and transparency to your web
+                        browsing.
+                    </p>
+                    <p>
+                        With
+
+                        Certificate Transparency (CT) technology integrated with Celestia Blockchain, this extension
+                        helps
+
+                        you
+
+                        check and validate SSL/TLS certificates quickly and accurately.
+                    </p>
+                </div>
+                <div class="introduction-section">
+                    <h2>Key Features:</h2>
+                    <p> Certificate Registration and Storage: Record and store SSL/TLS certificates on the blockchain to
+                        ensure transparency and security.</p>
+                    <p>Certificate Validation: Check and validate the validity of certificates instantly.</p>
+                    <p>Graylist Management: Monitor suspicious certificates and block potential threats.</p>
+                    <p>Security Event Management: Track and log security events to keep you safe.</p>
+                    <p>Decentralized management: Grant access and management of certification data to stakeholders.</p>
+                </div>
+                <div class="introduction-section">
+                    <h2>Why Choose Prism CT Browser Extension?</h2>
+                    <p>Transparency and Security: Leverage the Celestia Blockchain to ensure absolute transparency and
+                        security for your certificates.</p>
+                    <p>Easy to use: Friendly interface and easy to use for everyone.</p>
+                    <p>Fast and Efficient: Process and validate certificates quickly and efficiently.</p>
+                </div>
+
+
+            </div>
+
+            <!-- Particles Effects -->
+            <div class="particles">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+            <!-- Popup -->
+            <section class="popup-container hidden content-area">
+                <header class="popup-header">
+                    <img src="icons/icon48.png" alt="Certificate Logo" class="logo">
+                    <h2>Certificate Transparency</h2>
+                    <h3>Check website transparency easily.</h3>
+                </header>
+
+                <main>
+                    <!-- Result Display -->
+                    <div id="result-container" class="hidden content-area">
+                        <!-- Input Field -->
+                        <input type="text" id="url-input" placeholder="Enter the URL to check" />
+                        <!-- Check Button -->
+                        <button id="check-button" class="primary-button">Check Now</button>
+                        <h3>Results:</h3>
+                        <p id="result"></p>
+                    </div>
+
+                    <!-- History Section -->
+                    <section id="history-container" class="hidden content-area">
+                        <h3>History</h3>
+                        <button id="load-history-button" class="secondary-button">Download history from
+                            Blockchain</button>
+                        <div id="history-list"></div>
+                    </section>
+
+                    <!-- Settings Section -->
+                    <section id="settings-section" class="hidden content-area">
+                        <h2>Setting</h2>
+                        <ul class="settings-list">
+                            <li>
+                                <h3>Customize the interface</h3>
+                                <p>Adjust the background color for the Extension interface.</p>
+                                <button id="customize-interface" class="settings-button">Customize</button>
+                                <!-- Menu tùy chỉnh giao diện -->
+                                <div id="customize-menu" class="hidden">
+                                    <select id="theme-select">
+                                        <option value="light">Light</option>
+                                        <option value="dark">Dark</option>
+                                        <option value="system">Default by machine</option>
+                                    </select>
+                                </div>
+                            </li>
+                            <!-- <li>
+                        <h3>Quản lý quyền truy cập</h3>
+                        <p>Kiểm soát và quản lý quyền truy cập của người dùng.</p>
+                        <button id="manage-access" class="settings-button">Quản lý</button>
+                    </li> -->
+                            <li>
+                                <h3>Notification</h3>
+                                <p>Turn app notifications on or off.</p>
+                                <button id="notifications" class="settings-button">ON</button>
+                                <div id="notification" class="notification">
+                                    <span class="closebtn" onclick="closeNotification()">&times;</span>
+                                    <strong id="notificationMessage">
+                                        Notification!</strong>
+                                </div>
+
+                            </li>
+                            <!-- <li>
+                        <h3>Ngôn ngữ</h3>
+                        <p>Thay đổi ngôn ngữ giao diện ứng dụng.</p>
+                        <button id="language" class="settings-button">Chọn ngôn ngữ</button>
+                    </li> -->
+                            <li>
+                                <!-- <h3>Backup and Restore</h3>
+                                <p>Create a backup or restore your data.</p>
+                                <button id="backup-restore" class="settings-button">Backup/Restore</button> -->
+                                <h3>Backup and Restore</h3>
+                                <p>Create a backup or restore your data.</p>
+                                <button id="backup-restore" class="settings-button">Backup/Restore</button>
+
+                                <!-- Modal for Backup and Restore -->
+                                <div id="backup-restore-modal" class="modal">
+                                    <div class="modal-content">
+                                        <span id="cancel-backup-restore" class="close">&times;</span>
+                                        <div id="backup-restore-content">
+                                            <h3>Backup and Restore</h3>
+                                            <p>Choose an option:</p>
+                                            <button id="backup-button" class="modal-button">Backup</button>
+                                            <button id="restore-button" class="modal-button">Restore</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </li>
+                            <li>
+
+                                <h3>Update</h3>
+                                <p>Check and install the latest version of the application.</p>
+                                <button id="update" class="settings-button">Update</button>
+                                <div id="updateMessage" class="notification">
+                                    <span class="closebtn" onclick="closeUpdateNotification()">&times;</span>
+                                    <strong id="updateNotificationMessage">The current version is the latest
+                                        update.</strong>
+                                </div>
+                            </li>
+                        </ul>
+
+                    </section>
+
+
+                    <div id="about-container" class="hidden content-area">
+                        <h2>About</h2>
+                        <div class="about-section">
+                            <h3>Extension Name:</h3>
+                            <p>Certificate Transparency Browser Extension</p>
+                        </div>
+                        <div class="about-section">
+                            <h3>Version:</h3>
+                            <p>1.0.0</p>
+                        </div>
+                        <div class="about-section">
+                            <h3>Developer:</h3>
+                            <p>GDU 07 Development Team</p>
+                        </div>
+                        <div class="about-section">
+                            <h3>Describe:</h3>
+                            <p>
+                                A tool that helps check the transparency certificates of websites, protecting users from
+                                security risks.
+                            </p>
+                        </div>
+                        <div class="about-section">
+                            <h3>Access Rights:</h3>
+                            <ul>
+                                <li>Network connection</li>
+                                <li>Local storage</li>
+                            </ul>
+                        </div>
+                        <div class="about-section">
+                            <h3>Privacy Policy:</h3>
+                            <p>
+                                We promise not to collect or share your personal data.
+                                Please read more at <a href="#" target="_blank">privacy policy</a>.
+                            </p>
+                        </div>
+                        <div class="about-section">
+                            <h3>Last updated:</h3>
+                            <p>16/01/2025</p>
+                        </div>
+
+                    </div>
+                </main>
+
+
+            </section>
+
+
+
+        </main>
+    </div>
+    <!-- Wave -->
+    <div class="wave"></div>
+    <!-- Liên kết đến file JavaScript -->
+    <script type="module" src="index.js"></script>
+    <!-- Prism.js Scripts -->
+    <script src="prism.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-html.min.js"></script>
+
+
+</html>
