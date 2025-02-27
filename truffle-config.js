@@ -41,10 +41,13 @@
  * https://trufflesuite.com/docs/truffle/getting-started/using-the-truffle-dashboard/
  */
 
-// require('dotenv').config();
-// const { MNEMONIC, PROJECT_ID } = process.env;
+require("dotenv").config();
+const { MNEMONIC, PROJECT_ID } = process.env;
 
-// const HDWalletProvider = require('@truffle/hdwallet-provider');
+const HDWalletProvider = require("@truffle/hdwallet-provider");
+
+
+
 
 module.exports = {
   /**
@@ -64,13 +67,13 @@ module.exports = {
     // tab if you use this network and you must also set the `host`, `port` and `network_id`
     // options below to some value.
     //
-     development: {
-     host: "127.0.0.1",     // Localhost (default: none)
-     port: 7545,            // Standard Ethereum port (default: none)
-     network_id: "*",  
-     gas: 6000000, 
-      gasPrice: 20000000000,     
-     },
+    development: {
+      host: "127.0.0.1",     // Localhost (default: none)
+      port: 7545,            // Standard Ethereum port (default: none)
+      network_id: "*",
+      gas: 6000000,
+      gasPrice: 20000000000,
+    },
     //
     // An additional network, but with some advanced options…
     // advanced: {
@@ -98,6 +101,17 @@ module.exports = {
     //   network_id: 2111,   // This network is yours, in the cloud.
     //   production: true    // Treats this network as if it was a public net. (default: false)
     // }
+    sepolia: {
+      provider: () =>
+        new HDWalletProvider(
+          process.env.MNEMONIC,
+          `https://sepolia.infura.io/v3/96cb687bb1554e53af8f8555b5ae5408`
+        ),
+      network_id: 11155111, // ID của Sepolia
+      confirmations: 2, // Số block xác nhận trước khi hoàn tất giao dịch
+      timeoutBlocks: 200,
+      skipDryRun: true,
+    },
   },
 
   // Set default mocha options here, use special reporters, etc.
@@ -110,12 +124,13 @@ module.exports = {
     solc: {
       version: "0.8.19",      // Fetch exact version from solc-bin (default: truffle's version)
       // docker: true,        // Use "0.5.1" you've installed locally with docker (default: false)
-       settings: {          // See the solidity docs for advice about optimization and evmVersion
+      settings: {          // See the solidity docs for advice about optimization and evmVersion
         optimizer: {
-         enabled: false,
-         runs: 200},
-      //  evmVersion: "byzantium"
-       }
+          enabled: false,
+          runs: 200
+        },
+        //  evmVersion: "byzantium"
+      }
     }
   },
 
