@@ -107,6 +107,7 @@ module.exports = {
           process.env.MNEMONIC,
           `https://sepolia.infura.io/v3/96cb687bb1554e53af8f8555b5ae5408`
         ),
+        contractAddress: "0xd8623279e2d187184c375fa8f0b13680140fd04c",
       network_id: 11155111, // ID của Sepolia
       confirmations: 2, // Số block xác nhận trước khi hoàn tất giao dịch
       timeoutBlocks: 200,
