@@ -1,58 +1,58 @@
 Certificate Transparency Browser Extension
 
-🚀 Giới Thiệu
+🚀 Introduction
 
-Certificate Transparency Browser Extension là một dự án sử dụng công nghệ blockchain để đảm bảo tính minh bạch và an toàn cho chứng chỉ SSL/TLS. Chúng tôi sử dụng Ethereum, Celestia, và Merkle Tree để lưu trữ và xác minh tính hợp lệ của chứng chỉ, giúp chống lại các cuộc tấn công giả mạo và đảm bảo độ tin cậy cho người dùng.
+The Certificate Transparency Browser Extension is a project utilizing blockchain technology to ensure the transparency and security of SSL/TLS certificates. We leverage Ethereum, Celestia, and Merkle Tree to store and verify certificate validity, preventing forgery attacks and enhancing trust for users.
 
-❌ Vấn Đề Hiện Nay
+❌ Current Issues
 
-Chứng chỉ SSL/TLS có thể bị giả mạo hoặc thu hồi mà không có thông báo công khai.
+SSL/TLS certificates can be forged or revoked without public notice.
 
-Người dùng không có cách trực tiếp để kiểm tra độ tin cậy của chứng chỉ.
+Users have no direct way to verify the reliability of a certificate.
 
-Dữ liệu chứng chỉ thường bị kiểm soát bởi các bên trung gian, dễ bị thao túng.
+Certificate data is often controlled by intermediaries, making it susceptible to manipulation.
 
-✅ Giải Pháp của Chúng Tôi
+✅ Our Solution
 
-Lưu trữ log chứng chỉ trên Blockchain (Ethereum, Celestia)
+Store certificate logs on Blockchain (Ethereum, Celestia).
 
-Xác minh tính toàn vẹn bằng Merkle Tree & Transparency Proofs
+Ensure data integrity with Merkle Tree & Transparency Proofs.
 
-Tích hợp Extension trình duyệt để kiểm tra chứng chỉ theo thời gian thực
+Integrate a browser extension for real-time certificate verification.
 
-Xây dựng API backend bằng Rust để kết nối với blockchain và xử lý dữ liệu
+Build a backend API with Rust to connect with blockchain and process data.
 
-🛠 Thành Phần Chính
+🛠 Core Components
 
-1️⃣ Smart Contract Blockchain
+1️⃣ Blockchain Smart Contract
 
-Lưu trữ chứng chỉ, Merkle Root, và Transparency Proofs.
+Stores certificates, Merkle Root, and Transparency Proofs.
 
-Ghi nhận chứng chỉ bị thu hồi (Revocation Logs).
+Records Revocation Logs for revoked certificates.
 
 2️⃣ API Server (Rust)
 
-Kết nối trình duyệt với blockchain.
+Connects the browser with the blockchain.
 
-Cung cấp dữ liệu Merkle Proof từ Celestia.
+Provides Merkle Proof data from Celestia.
 
-3️⃣ Trình Duyệt Extension & UI
+3️⃣ Browser Extension & UI
 
-Kiểm tra chứng chỉ của website trực tiếp từ trình duyệt.
+Checks website certificates directly from the browser.
 
-Hiển thị lịch sử kiểm tra từ blockchain.
+Displays verification history retrieved from the blockchain.
 
-🔗 Dữ Liệu Được Lưu Trên Blockchain
+🔗 Data Stored on Blockchain
 
-Log Entries về chứng chỉ: Public key, serial number, hash chứng chỉ, thông tin tổ chức cấp phát.
+Log Entries: Public key, serial number, certificate hash, issuing organization details.
 
 Transparency Proofs: Merkle Root, Inclusion Proofs.
 
 Metadata: Timestamp, Block Height, Log ID.
 
-Revocation Logs: Ghi nhận chứng chỉ bị thu hồi.
+Revocation Logs: Records of revoked certificates.
 
-🚀 Công Nghệ Sử Dụng
+🚀 Technologies Used
 
 Blockchain: Ethereum, Celestia.
 
@@ -62,52 +62,52 @@ Backend: Rust (Actix Web), Web3.js.
 
 Frontend: Chrome Extension.
 
-Xác minh dữ liệu: Merkle Tree, Prism SDK.
+Data Verification: Merkle Tree, Prism SDK.
 
-🎯 Demo Hệ Thống
+🎯 System Demo
 
-Trình duyệt extension kiểm tra chứng chỉ theo thời gian thực.
+Real-time SSL/TLS certificate verification via browser extension.
 
-Lịch sử kiểm tra được lưu trên Blockchain.
+Verification history stored on Blockchain for transparency.
 
-API Backend kết nối với Celestia để xác minh Merkle Proof.
+Backend API connecting to Celestia for Merkle Proof validation.
 
-✔ Lợi Ích và Ứng Dụng
+✔ Benefits & Applications
 
-Chống giả mạo chứng chỉ SSL/TLS.
+Prevents SSL/TLS certificate forgery.
 
-Minh bạch hóa quá trình cấp phát chứng chỉ.
+Enhances transparency in certificate issuance.
 
-Bảo vệ người dùng khỏi các cuộc tấn công MITM (Man-In-The-Middle).
+Protects users from MITM (Man-In-The-Middle) attacks.
 
-🔥 Kế Hoạch Phát Triển
+🔥 Future Development Plans
 
-Mở rộng hỗ trợ nhiều blockchain (Polygon, BNB Chain, Solana).
+Expand support to multiple blockchains (Polygon, BNB Chain, Solana).
 
-Tích hợp AI để phát hiện chứng chỉ đáng ngờ.
+Integrate AI to detect suspicious certificates.
 
-Cải thiện giao diện, tối ưu tốc độ xác minh.
+Improve UI/UX and verification speed optimization.
 
-📌 Cách Cài Đặt và Sử Dụng
+📌 Installation & Usage Guide
 
-1️⃣ Cài đặt API Server
+1️⃣ Set Up API Server
 
 cargo run --release
 
-2️⃣ Cài đặt Extension trên Chrome
+2️⃣ Install Chrome Extension
 
-Truy cập chrome://extensions/.
+Go to chrome://extensions/.
 
-Chọn "Load Unpacked" và tải thư mục chứa mã extension.
+Click "Load Unpacked" and select the extension folder.
 
 3️⃣ Deploy Smart Contract
 
 npx hardhat run scripts/deploy.js --network goerli
 
-💡 Đóng Góp và Liên Hệ
+💡 Contributions & Contact
 
-Đóng góp qua Pull Request trên GitHub.
+Contribute via Pull Requests on GitHub.
 
-Liên hệ: https://github.com/NTV2k5.
+Contact: https://github.com/NTV2k5.
 
-📌 Hãy cùng xây dựng một hệ thống bảo mật chứng chỉ minh bạch và an toàn hơn! 🔥
+📌 Let's build a more secure and transparent certificate security system! 🔥
